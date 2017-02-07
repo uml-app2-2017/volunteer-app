@@ -1,0 +1,8 @@
+User Stories for Volunteer App
+
+
+Meredith is is an 79 year old woman who lives alone. She loves the city she lives in, Lowell, and likes to keep up to date with the happenings inside the city. She likes to attend city hall meetings, however, she needs a walker to get around, and because of her weak legs she is unable to drive. Because she doesn't get out too much, she really looks forward to her weekly city hall meetings. Meredith could benefit from our volunteering app. With this, she can log in, quickly and easily schedule a ride for any time/date she needs, and someone will accept her request as soon as they're available. With this, Meredith can now expect that she will be able to get to her meetings every week, giving her peace of mind, and one less thing to worry about.
+
+
+
+Paul is a 19 year old starting his college career. For his degree, he is required to complete 40 hours of community service before he graduates. Finding places that need volunteering can be a difficult task, especially finding one that fits within his schedule. However, with our volunteering app, Paul can sign in and find all the people near him that require assistance. This assistance can be with transportation, errand running, or anything else the client needs help with. Paul can find whatever client's needs fit his schedule, and notify them quickly through the app. Once Paul completes his client's tasks, the number of hours is recorded, and he gains points through the app that will lead to achievments later on.
