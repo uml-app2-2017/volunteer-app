@@ -1,0 +1,48 @@
+Data Attributes
+
+USER
+- Has a profile
+- Is either a Client or Volunteer
+- Log in/Sign up at openning of app
+
+PROFILE
+- Name
+- Picture
+- Age
+- Address (private)
+- Contact information
+	- Phone number
+	- Email
+- Username
+- Password
+
+
+CLIENT
+- Has all profile information
+- Create tasks
+- Approve task has been completed or reject them
+
+
+VOLUNTEER
+- Has all profile information, in addition...
+	- Car information
+		- Year
+		- Make
+		- Model
+		- Number of seats
+		- Carrying capacity
+		- Handicap accessible
+		- Plate number
+- Accepts tasks for the client
+- Achievements
+- Score
+
+
+TASK
+- Types
+	- Grocieries
+	- A ride
+	- Errands
+- Type of car needed for task
+- Date/time of pickup/dropoff
+- Pickup/dropoff location
