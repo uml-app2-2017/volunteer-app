@@ -15,6 +15,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:label="SignUpActivity"
+            android:parentActivityName="edu.uml.android.volun_t.StartupActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.uml.android.volun_t.StartupActivity" />
+        </activity>
+        <activity
+            android:name=".SignInActivity"
+            android:label="SignUpActivity"
+            android:parentActivityName="edu.uml.android.volun_t.StartupActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.uml.android.volun_t.StartupActivity" />
+        </activity>
     </application>
 
 </manifest>
