@@ -33,6 +33,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.uml.android.volun_t.StartupActivity" />
         </activity>
+        <activity
+            android:name=".ClientDashActivity"
+            android:label="Client Dashboard">
+        </activity>
+        <activity
+            android:name=".VolunteerDashActivity"
+            android:label="Volunteer Dashboard">
+        </activity>
     </application>
 
 </manifest>

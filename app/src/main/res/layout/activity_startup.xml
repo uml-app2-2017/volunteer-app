@@ -20,7 +20,7 @@
         android:layout_centerHorizontal="true">
 
         <ImageView
-            android:layout_width="250dp"
+            android:layout_width="150dp"
             android:layout_height="250dp"
             android:layout_gravity="center"
             android:src="@mipmap/ic_launcher"/>
@@ -36,8 +36,9 @@
                 android:layout_height="90dp"
                 android:id="@+id/LoginButton"
                 android:text="Login"
-                android:textSize="35dp"
-                android:background="@color/colorPrimary"/>
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorWhiteFont"
+                android:textSize="35dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -50,7 +51,8 @@
                 android:id="@+id/CreateButton"
                 android:text="Create Account"
                 android:textSize="35dp"
-                android:background="@color/colorPrimary"/>
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorWhiteFont" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
