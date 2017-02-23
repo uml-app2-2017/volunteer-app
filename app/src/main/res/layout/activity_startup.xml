@@ -11,8 +11,46 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.uml.android.volun_t.StartupActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:orientation="vertical" >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/LoginButton"
+                android:text="Login"
+                android:textSize="35dp"
+                android:background="@color/colorPrimary"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/colorBackground"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:id="@+id/CreateButton"
+                android:text="Create Account"
+                android:textSize="35dp"
+                android:background="@color/colorPrimary"/>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
