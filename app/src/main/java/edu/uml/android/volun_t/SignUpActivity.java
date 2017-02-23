@@ -168,28 +168,65 @@ public class SignUpActivity extends AppCompatActivity {
 
     // Returns TRUE if all values in fields are enough to sign up for an account
     protected boolean validateFields(User user) {
+        boolean failed = false;
         // If passwords do not match
         if (!user.getPass().equals(user.getPass2())) {
-            Toast.makeText(getApplicationContext(), "Passwords do not match.", Toast.LENGTH_SHORT).show();
-            return false;
+            inputPassword.setError("Passwords do not match.");
+            inputPassword2.setError("Passwords do not match.");
+            failed = true;
         }
         // If password is too short
         if (user.getPass().length() < 6) {
-            Toast.makeText(getApplicationContext(), "Password must be 6 or more characters long.", Toast.LENGTH_SHORT).show();
-            return false;
+            inputPassword.setError("Password must be 6 characters long or more.");
+            failed = true;
         }
         // See if other fields were missing
-        if (TextUtils.isEmpty(user.getEmail()) || TextUtils.isEmpty(user.getFirst()) || TextUtils.isEmpty(user.getLast()) ||
-                TextUtils.isEmpty(user.getAddress()) || TextUtils.isEmpty(user.getPhone())) {
-            Toast.makeText(getApplicationContext(), "Missing personal information, please check.", Toast.LENGTH_SHORT).show();
-            return false;
+        if (TextUtils.isEmpty(user.getEmail())) {
+            inputEmail.setError("Missing email.");
+            failed = true;
+        }
+        if (TextUtils.isEmpty(user.getFirst())) {
+            inputFirstC.setError("Missing first name.");
+            inputFirstV.setError("Missing first name.");
+            failed = true;
+        }
+        if (TextUtils.isEmpty(user.getLast())) {
+            inputLastC.setError("Missing last name.");
+            inputLastV.setError("Missing last name.");
+            failed = true;
+        }
+        if (TextUtils.isEmpty(user.getAddress())) {
+            inputAddressC.setError("Missing address.");
+            inputAddressV.setError("Missing address.");
+            failed = true;
+        }
+        if (TextUtils.isEmpty(user.getPhone())) {
+            inputPhoneC.setError("Missing phone number.");
+            inputPhoneV.setError("Missing phone number.");
+            failed = true;
         }
         if (user.getType() == 1) {
-            if (TextUtils.isEmpty(user.getMake()) || TextUtils.isEmpty(user.getModel()) || TextUtils.isEmpty(user.getPlate()) ||
-                user.getSeats() <= 0) {
-                Toast.makeText(getApplicationContext(), "Missing vehicle information, please check.", Toast.LENGTH_SHORT).show();
-                return false;
+            if (TextUtils.isEmpty(user.getMake())) {
+                inputMake.setError("Missing vehicle make type.");
+                failed = true;
             }
+            if (TextUtils.isEmpty(user.getModel())) {
+                inputModel.setError("Missing vehicle model type.");
+                failed = true;
+            }
+            if (TextUtils.isEmpty(user.getPlate())) {
+                inputLicense.setError("Missing plate number.");
+                failed = true;
+            }
+            if (user.getSeats() <= 0) {
+                inputSeats.setError("Must have at least one seat available.");
+                failed = true;
+            }
+        }
+
+        if (failed) {
+            Toast.makeText(SignUpActivity.this, "Check highlighted fields.", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
         return true;
@@ -200,25 +237,7 @@ public class SignUpActivity extends AppCompatActivity {
         FirebaseUser firebaseUser = auth.getCurrentUser();
         String uid = firebaseUser.getUid();
 
-        db.child("users").child(uid).child("email").setValue(user.getEmail());
-        db.child("users").child(uid).child("first_name").setValue(user.getFirst());
-        db.child("users").child(uid).child("last_name").setValue(user.getLast());
-        db.child("users").child(uid).child("address").setValue(user.getAddress());
-        db.child("users").child(uid).child("phone_number").setValue(user.getPhone());
-
-        if (user.getType() == 0) {
-            db.child("users").child(uid).child("type").setValue("client");
-        } else if (user.getType() == 1) {
-            db.child("users").child(uid).child("type").setValue("volunteer");
-            db.child("users").child(uid).child("make").setValue(user.getMake());
-            db.child("users").child(uid).child("model").setValue(user.getModel());
-            db.child("users").child(uid).child("license_plate").setValue(user.getPlate());
-            db.child("users").child(uid).child("number_of_seats").setValue(user.getSeats());
-            db.child("users").child(uid).child("handicap_access").setValue(user.getHandicap());
-        } else {
-            db.child("users").child(uid).child("type").setValue("!UNKNOWN!");
-            return false;
-        }
+        db.child("users").child(uid).setValue(user);
 
         return true;
     }

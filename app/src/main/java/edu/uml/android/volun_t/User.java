@@ -10,6 +10,21 @@ public class User {
     private int seats, type;  // type = 0 when client, type = 1 when volunteer
     private boolean handicap;
 
+    public User() {
+        email = "";
+        pass = "";
+        pass2 = "";
+        first = "";
+        last = "";
+        phone = "";
+        make = "";
+        model = "";
+        plate = "";
+        seats = 0;
+        type = -1;
+        handicap = false;
+    }
+
     public User(String email, String pass, String pass2, String first, String last, String address,
                 String phone, String make, String model, String plate, int seats, int type,
                 boolean handicap) {
