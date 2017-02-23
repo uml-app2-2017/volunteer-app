@@ -6,5 +6,5 @@ On the other hand, if you require assistance, Volun-T is your solution, too! Our
 ## More Info
 This is an android based mobile application developed by Adam Gaudreau, Timothy Larcque, and Ashley Hale for our Mobile App Development 2 class at UML.
 
-## VERSION 1 INFO
-We added firebase to our app, so users can now create accounts and log in with them.
+## VERSION 2 INFO
+TBD
