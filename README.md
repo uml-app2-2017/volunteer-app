@@ -8,3 +8,13 @@ This is an android based mobile application developed by Adam Gaudreau, Timothy 
 
 ## VERSION 1 INFO
 We added firebase to our app, so users can now create accounts and log in with them.
+
+Adam:
+- Added Firebase authorization stuff for login and sign up with email.
+- Layout for SignUpActivity
+
+Ashley:
+- Layout for StartupActivity
+
+Tim:
+- Layout for SignInActivity
