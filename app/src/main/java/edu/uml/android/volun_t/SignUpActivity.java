@@ -71,10 +71,10 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Make sure all fields have been entered
                 final User user = createUser();
-                if(!validateFields(user)) return;
+                if(!validateFields(user, inputPassword.getText().toString(), inputPassword2.getText().toString())) return;
                 // We should be good to go, no create the user
                 progressBar.setVisibility(View.VISIBLE);
-                auth.createUserWithEmailAndPassword(user.getEmail(), user.getPass())
+                auth.createUserWithEmailAndPassword(user.getEmail(), inputPassword.getText().toString())
                         .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -162,21 +162,21 @@ public class SignUpActivity extends AppCompatActivity {
             phone = inputPhoneC.getText().toString().trim();
         }
 
-        return new User(email, pass1, pass2, first, last, address, phone, make, model, plate, seats, type, handicap);
+        return new User(email, first, last, address, phone, make, model, plate, seats, type, handicap);
 
     }
 
     // Returns TRUE if all values in fields are enough to sign up for an account
-    protected boolean validateFields(User user) {
+    protected boolean validateFields(User user, String pass1, String pass2) {
         boolean failed = false;
         // If passwords do not match
-        if (!user.getPass().equals(user.getPass2())) {
+        if (!pass1.equals(pass2)) {
             inputPassword.setError("Passwords do not match.");
             inputPassword2.setError("Passwords do not match.");
             failed = true;
         }
         // If password is too short
-        if (user.getPass().length() < 6) {
+        if (pass1.length() < 6) {
             inputPassword.setError("Password must be 6 characters long or more.");
             failed = true;
         }

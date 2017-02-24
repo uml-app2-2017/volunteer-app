@@ -32,7 +32,6 @@ public class SignInActivity extends AppCompatActivity {
     private DatabaseReference db;
     private Button loginButton;
     private EditText emailField, passwordField;
-    private int mUserType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +49,7 @@ public class SignInActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO add a loading icon for user when logging in
                 String email = emailField.getText().toString().trim();
                 final String password = passwordField.getText().toString().trim();
 
@@ -68,22 +68,9 @@ public class SignInActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(SignInActivity.this, "Auth Failed:  " + task.getException(),
-                                            Toast.LENGTH_SHORT).show();
+                                    passwordField.setError("Password incorrect or account does not exist.");
                                 } else {
-                                    if (getUserType() == 1) {
-                                        if (mUserType == 0) {
-                                            startActivity(new Intent(SignInActivity.this, ClientDashActivity.class));
-                                            finish();
-                                        }
-                                        if (mUserType == 1) {
-                                            startActivity(new Intent(SignInActivity.this, VolunteerDashActivity.class));
-                                            finish();
-                                        }
-                                    } else {
-                                        Toast.makeText(SignInActivity.this, "Error signing in. Try again later.",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
+                                    getUserTypeAndLogin();
                                 }
                             }
                         });
@@ -92,17 +79,23 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    protected int getUserType() {
+    protected void getUserTypeAndLogin() {
         // Get user ID
         FirebaseUser firebaseUser = auth.getCurrentUser();
         String uid = firebaseUser.getUid();
-        int type = -1;
 
         db.child("users").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                mUserType = user.getType();
+                int type = user.getType();
+                if (type == 0) {
+                    startActivity(new Intent(SignInActivity.this, ClientDashActivity.class));
+                    finish();
+                } else if (type == 1) {
+                    startActivity(new Intent(SignInActivity.this, VolunteerDashActivity.class));
+                    finish();
+                }
             }
 
             @Override
@@ -111,8 +104,6 @@ public class SignInActivity extends AppCompatActivity {
                 Log.w("ERROR", "Failed to read value.", error.toException());
             }
         });
-
-        return 1;
     }
 
 
