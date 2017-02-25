@@ -19,26 +19,15 @@ import com.google.firebase.database.ValueEventListener;
 
 public class StartupActivity extends AppCompatActivity {
 
-    private FirebaseAuth auth;
-    private DatabaseReference db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
 
-        auth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance().getReference();
-
         Button LoginButton = (Button) findViewById(R.id.LoginButton);
         LoginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                    // TODO show a loader here
-                    getUserTypeAndLogin();
-                } else {
-                    startActivity(new Intent(StartupActivity.this, SignInActivity.class));
-                }
+                startActivity(new Intent(StartupActivity.this, SignInActivity.class));
             }
 
         });
@@ -49,33 +38,6 @@ public class StartupActivity extends AppCompatActivity {
                 startActivity(new Intent(StartupActivity.this,SignUpActivity.class));
             }
 
-        });
-    }
-
-    protected void getUserTypeAndLogin() {
-        // Get user ID
-        FirebaseUser firebaseUser = auth.getCurrentUser();
-        String uid = firebaseUser.getUid();
-
-        db.child("users").child(uid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                int type = user.getType();
-                if (type == 0) {
-                    startActivity(new Intent(StartupActivity.this, ClientDashActivity.class));
-                    finish();
-                } else if (type == 1) {
-                    startActivity(new Intent(StartupActivity.this, VolunteerDashActivity.class));
-                    finish();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("ERROR", "Failed to read value.", error.toException());
-            }
         });
     }
 
