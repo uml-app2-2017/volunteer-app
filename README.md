@@ -6,18 +6,12 @@ On the other hand, if you require assistance, Volun-T is your solution, too! Our
 ## More Info
 This is an android based mobile application developed by Adam Gaudreau, Timothy Larcque, and Ashley Hale for our Mobile App Development 2 class at UML.
 
-## VERSION 2 INFO
-Added a comminty page, profile page, and made the sign in process better.
+## VERSION 3 INFO
+TBD
 
 Adam:
-- Added splash screen
-- App opens to corresponding dashboard if user is already signed in
-- Added sign out feature
 
 Tim:
-- Layout done on both profile pages
-- Profile activities created
 
 Ashley:
-- Worked on community page
-- Added various achievements
+
