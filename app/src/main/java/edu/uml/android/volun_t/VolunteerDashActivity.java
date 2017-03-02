@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class VolunteerDashActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
+    private Button CommunityButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,15 @@ public class VolunteerDashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vdash);
 
         auth = FirebaseAuth.getInstance();
+
+        CommunityButton = (Button) findViewById(R.id.your_community_button_vol);
+
+        CommunityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(VolunteerDashActivity.this, CommunityActivity.class));
+            }
+        });
     }
 
     @Override

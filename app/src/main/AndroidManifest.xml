@@ -45,6 +45,15 @@
             android:name=".VolunteerDashActivity"
             android:label="Volunteer Dashboard">
         </activity>
+        <activity
+            android:name=".CommunityActivity"
+            android:label="Your Community"
+            android:parentActivityName="edu.uml.android.volun_t.VolunteerDashActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.uml.android.volun_t.VolunteerDashActivity" />
+        </activity>
     </application>
 
 </manifest>
