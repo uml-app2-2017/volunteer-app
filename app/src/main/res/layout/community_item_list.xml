@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Layout for an achievement-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ach_container"
+    android:background="@color/colorBackground">
+
+        <ImageView
+            android:id="@+id/starImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="top|left|center_vertical"
+            app:srcCompat="@android:drawable/btn_star_big_off"/>
+
+        <LinearLayout
+            android:id="@+id/text_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:gravity="center_vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/ach_name_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Achievement Name"
+                android:textColor="@color/colorWhiteFont"/>
+
+            <TextView
+                android:id="@+id/ach_desc_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Achievement Description"
+                android:textColor="@color/colorWhiteFont"/>
+
+        </LinearLayout>
+</LinearLayout>
