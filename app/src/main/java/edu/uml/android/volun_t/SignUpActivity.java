@@ -162,7 +162,7 @@ public class SignUpActivity extends AppCompatActivity {
             phone = inputPhoneC.getText().toString().trim();
         }
 
-        return new User(email, first, last, address, phone, make, model, plate, seats, type, handicap);
+        return new User(email, first, last, address, phone, make, model, plate, seats, type, handicap, 0, 0);
 
     }
 

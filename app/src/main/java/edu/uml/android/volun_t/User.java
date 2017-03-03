@@ -9,6 +9,7 @@ public class User {
     private String email, first, last, address, phone, make, model, plate;
     private int seats, type;  // type = 0 when client, type = 1 when volunteer
     private boolean handicap;
+    private int level, levelProgress;
 
     public User() {
         email = "";
@@ -18,6 +19,8 @@ public class User {
         make = "";
         model = "";
         plate = "";
+        level = 0;
+        levelProgress = 0;
         seats = 0;
         type = -1;
         handicap = false;
@@ -25,7 +28,7 @@ public class User {
 
     public User(String email, String first, String last, String address,
                 String phone, String make, String model, String plate, int seats, int type,
-                boolean handicap) {
+                boolean handicap, int level, int levelProgress) {
         this.email = email;
         this.first = first;
         this.last = last;
@@ -37,6 +40,8 @@ public class User {
         this.seats = seats;
         this.type = type;
         this.handicap = handicap;
+        this.level = level;
+        this.levelProgress = levelProgress;
     }
 
     public String getEmail() { return email; }
@@ -49,6 +54,8 @@ public class User {
     public String getPlate() { return plate; }
     public int getSeats() { return seats; }
     public int getType() { return type; }
-    public boolean getHandicap() {return handicap; }
+    public boolean getHandicap() { return handicap; }
+    public int getLevel() { return level; }
+    public int getLevelProgress() { return levelProgress; }
 
 }
