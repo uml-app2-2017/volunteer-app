@@ -29,7 +29,7 @@ public class ClientDashActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference db;
     private User user;
-    private Button profileButton, askHelpButton;
+    private Button profileButton, askHelpButton, plansButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,30 @@ public class ClientDashActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance().getReference();
+
+        profileButton = (Button) findViewById(R.id.your_profile_button_client);
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ClientDashActivity.this, ProfileActivity.class));
+            }
+        });
+
+        askHelpButton = (Button) findViewById(R.id.ask_for_help_button_client);
+        askHelpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ClientDashActivity.this, AskHelpActivity.class));
+            }
+        });
+
+        plansButton = (Button) findViewById(R.id.your_plans_button_client);
+        plansButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ClientDashActivity.this, PlansCActivity.class));
+            }
+        });
 
         // Get user reference
         db.child("users").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
@@ -61,22 +85,6 @@ public class ClientDashActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_dashboard, menu);
-
-        profileButton = (Button) findViewById(R.id.your_profile_button_client);
-        profileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ClientDashActivity.this, ProfileActivity.class));
-            }
-        });
-
-        askHelpButton = (Button) findViewById(R.id.ask_for_help_button_client);
-        askHelpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ClientDashActivity.this, AskHelpActivity.class));
-            }
-        });
 
         return true;
     }

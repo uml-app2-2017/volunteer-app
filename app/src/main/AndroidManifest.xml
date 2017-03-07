@@ -59,6 +59,24 @@
                 android:value="edu.uml.android.volun_t.VolunteerDashActivity" />
         </activity>
         <activity
+            android:name=".PlansVActivity"
+            android:label="Your Plans"
+            android:parentActivityName="edu.uml.android.volun_t.VolunteerDashActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.uml.android.volun_t.VolunteerDashActivity" />
+        </activity>
+        <activity
+            android:name=".PlansCActivity"
+            android:label="Your Plans"
+            android:parentActivityName="edu.uml.android.volun_t.ClientDashActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.uml.android.volun_t.ClientDashActivity" />
+        </activity>
+        <activity
             android:name=".AskHelpActivity"
             android:label="Ask for Help"
             android:parentActivityName="edu.uml.android.volun_t.ClientDashActivity" >

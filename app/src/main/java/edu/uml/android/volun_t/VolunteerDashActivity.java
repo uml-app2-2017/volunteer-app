@@ -31,7 +31,7 @@ public class VolunteerDashActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference db;
     User user;
-    private Button CommunityButton, profileButton, offerButton;
+    private Button CommunityButton, profileButton, offerButton, plansButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,7 @@ public class VolunteerDashActivity extends AppCompatActivity {
         CommunityButton = (Button) findViewById(R.id.your_community_button_vol);
         profileButton = (Button) findViewById(R.id.your_profile_button_vol);
         offerButton = (Button) findViewById(R.id.offer_help_button_vol);
+        plansButton = (Button) findViewById(R.id.your_plans_button_vol);
 
         CommunityButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +87,13 @@ public class VolunteerDashActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(VolunteerDashActivity.this, OfferHelpActivity.class));
+            }
+        });
+
+        plansButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(VolunteerDashActivity.this, PlansVActivity.class));
             }
         });
     }

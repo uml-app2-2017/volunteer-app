@@ -1,5 +1,8 @@
 package edu.uml.android.volun_t;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by adam on 2/16/17.
  */
@@ -10,6 +13,7 @@ public class User {
     private int seats, type;  // type = 0 when client, type = 1 when volunteer
     private boolean handicap;
     private int level, levelProgress;
+    private ArrayList<String> pendingPosts, acceptedPosts, completedPosts;
 
     public User() {
         email = "";
@@ -24,11 +28,15 @@ public class User {
         seats = 0;
         type = -1;
         handicap = false;
+        this.pendingPosts = new ArrayList<>();
+        this.acceptedPosts = new ArrayList<>();
+        this.completedPosts = new ArrayList<>();
     }
 
     public User(String email, String first, String last, String address,
                 String phone, String make, String model, String plate, int seats, int type,
-                boolean handicap, int level, int levelProgress) {
+                boolean handicap, int level, int levelProgress, ArrayList<String> waitingPosts,
+                ArrayList<String> acceptedPosts, ArrayList<String> completedPosts) {
         this.email = email;
         this.first = first;
         this.last = last;
@@ -42,6 +50,9 @@ public class User {
         this.handicap = handicap;
         this.level = level;
         this.levelProgress = levelProgress;
+        this.pendingPosts = waitingPosts;
+        this.acceptedPosts = acceptedPosts;
+        this.completedPosts = completedPosts;
     }
 
     public String getEmail() { return email; }
@@ -57,5 +68,22 @@ public class User {
     public boolean getHandicap() { return handicap; }
     public int getLevel() { return level; }
     public int getLevelProgress() { return levelProgress; }
-
+    public ArrayList<String> getPendingPosts() {
+        return pendingPosts;
+    }
+    public ArrayList<String> getAcceptedPosts() {
+        return acceptedPosts;
+    }
+    public ArrayList<String> getCompletedPosts() {
+        return completedPosts;
+    }
+    public void setWaitingPosts(ArrayList<String> waitingPosts) {
+        this.pendingPosts = waitingPosts;
+    }
+    public void setAcceptedPosts(ArrayList<String> acceptedPosts) {
+        this.acceptedPosts = acceptedPosts;
+    }
+    public void setCompletedPosts(ArrayList<String> completedPosts) {
+        this.completedPosts = completedPosts;
+    }
 }
