@@ -35,6 +35,7 @@ public class ClientDashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cdash);
+        overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance().getReference();

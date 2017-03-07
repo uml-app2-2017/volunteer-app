@@ -1,18 +1,21 @@
 package edu.uml.android.volun_t;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
  * Created by adam on 3/5/17.
  */
 
-public class Post {
+public class Post implements Serializable {
 
     private String timePosted;
     private String timeScheduled;
     private String timeCompleted;
     private String requesterUid;
     private String takerUid;
+    private String requesterName;
+    private String takerName;
     private String location;
     private String title;
     private String description;
@@ -20,12 +23,14 @@ public class Post {
     private boolean handicap;
     private boolean taken;
     private String postId;
+    private boolean completed;
 
     public Post() {}
 
     public Post(Calendar timePosted, Calendar timeScheduled, Calendar timeCompleted,
                 String requesterUid, String takerUid, String location, String title,
-                String description, int numPeople, boolean handicap, boolean taken, String postId) {
+                String description, int numPeople, boolean handicap, boolean taken, String postId,
+                boolean completed, String requesterName, String takerName) {
 
         this.timePosted = getFormattedTime(timePosted);
         this.timeScheduled = getFormattedTime(timeScheduled);
@@ -39,12 +44,15 @@ public class Post {
         this.handicap = handicap;
         this.taken = taken;
         this.postId = postId;
+        this.completed = completed;
+        this.requesterName = requesterName;
+        this.takerName = takerName;
     }
 
     public String getFormattedTime(Calendar c) {
         try {
-            String posted = "" + c.get(Calendar.MONTH) + c.get(Calendar.DAY_OF_MONTH)
-                    + c.get(Calendar.YEAR) + " " + c.get(Calendar.HOUR) + ":"
+            String posted = "" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" +
+                    + c.get(Calendar.YEAR) + "   " + c.get(Calendar.HOUR) + ":"
                     + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
             return posted;
         } catch (NullPointerException e) {
@@ -144,10 +152,21 @@ public class Post {
 
     public void setPostId(String postId) { this.postId = postId; }
 
+    public boolean isCompleted() { return completed; }
+
+    public void setCompleted(boolean comp) { completed = comp; }
+
+    public String getRequesterName() { return requesterName; }
+
+    public String getTakerName() { return takerName; }
+
     public boolean acceptPost(String takerUid) {
         this.takerUid = takerUid;
         taken = true;
         return true;
     }
+
+    @Override
+    public String toString() { return ""; }
 
 }

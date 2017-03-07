@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -38,15 +36,31 @@ public class AskHelpActivity extends AppCompatActivity {
     DatePicker mDateField;
     TimePicker mTimeField;
     CheckBox mHandicapField;
+    User currentUser;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_askhelp);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
 
-        // Get all the fields
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference();
+
+        db.child("users").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentUser = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("ERROR", "Failed to read value.", error.toException());
+            }
+        });
+
+        // Get all the fields
         mPostButton = (Button) findViewById(R.id.post_button);
         mCancelButton = (Button) findViewById(R.id.cancel_button);
         mTitleField = (EditText) findViewById(R.id.title_field);
@@ -99,7 +113,8 @@ public class AskHelpActivity extends AppCompatActivity {
         when.set(Calendar.MINUTE, mTimeField.getMinute());
         String location = street + " " + city + ", " + state + ", " + zip;
 
-        Post post = new Post(now, when, null, uid, null, location, title, desc, Integer.parseInt(seats), handicap, false, postId.toString());
+        Post post = new Post(now, when, null, uid, null, location, title, desc, Integer.parseInt(seats),
+                handicap, false, postId.toString(), false, currentUser.getFirst() + " " + currentUser.getLast(), null);
         db.child("pendingPosts").child(postId.toString()).setValue(post);
 
         db.child("users").child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {

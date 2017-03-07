@@ -19,6 +19,7 @@ public class CommunityActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
         // Create a list of songs
         ArrayList<Achievement> achs = new ArrayList<Achievement>();
         achs.add(new Achievement("The Airborne Toxic Event", "All I Ever Wanted", 17301515));

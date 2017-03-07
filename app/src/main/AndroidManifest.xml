@@ -42,6 +42,10 @@
             android:label="Client Dashboard">
         </activity>
         <activity
+            android:name=".ViewPostActivity"
+            android:label="View Post">
+        </activity>
+        <activity
             android:name=".VolunteerDashActivity"
             android:label="Volunteer Dashboard">
         </activity>

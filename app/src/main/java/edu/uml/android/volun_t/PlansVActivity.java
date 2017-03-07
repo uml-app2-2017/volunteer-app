@@ -15,6 +15,7 @@ public class PlansVActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vplans);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
 
         // Set up the tabs
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);

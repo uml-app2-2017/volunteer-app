@@ -17,23 +17,27 @@ import java.util.ArrayList;
 
 public class DatabaseUtils {
 
+    private ArrayList<Post> allPendingPosts = new ArrayList<>();
     private ArrayList<Post> pendingPosts = new ArrayList<>();
     private ArrayList<Post> acceptedPosts = new ArrayList<>();
     private ArrayList<Post> completedPosts = new ArrayList<>();
-    private boolean pen = false, acc = false, com = false;
-    int numPending = 0, numAccepted = 0, numCompleted = 0;
+    private boolean pen = false, acc = false, com = false, apen = false;
+    int numPending = 0, numAccepted = 0, numCompleted = 0, numAllPending = 0;
     private User currentUser;
 
     public DatabaseUtils() {
         getUser();
+        setAllPendingPosts();
     }
 
     public boolean isDone() {
-        if (pen && acc && com) {
+        if (pen && acc && com && apen) {
             return true;
         } else
             return false;
     }
+
+    public ArrayList<Post> getAllPendingPosts() { return allPendingPosts; }
 
     public ArrayList<Post> getCurrentUserPendingPosts() {
         return pendingPosts;
@@ -45,6 +49,31 @@ public class DatabaseUtils {
 
     public ArrayList<Post> getCurrentUserCompletedPosts() {
         return completedPosts;
+    }
+
+    private void setAllNumPending(int num) { numAllPending = num; }
+
+    private void setAllPendingPosts() {
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+
+        db.child("pendingPosts").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                setAllNumPending((int) dataSnapshot.getChildrenCount());
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                int counter = 0;
+                for (DataSnapshot snap : children) {
+                    Post post = snap.getValue(Post.class);
+                    addToAllPending(post);
+                }
+                if (counter == 0) apen = true;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void setPendingPosts() {
@@ -102,6 +131,13 @@ public class DatabaseUtils {
                         }
                     });
         }
+    }
+
+    private void addToAllPending(Post post) {
+        allPendingPosts.add(post);
+        Log.e("HERE", "" + allPendingPosts.size());
+        if (allPendingPosts.size() == numAllPending)
+            apen = true;
     }
 
     private void addToPending(Post post) {

@@ -31,17 +31,17 @@ public class CategoryCFragment extends Fragment implements LoaderManager.LoaderC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.plans_list, container, false);
 
+        category = this.getArguments().getString("category");
         ListView postListView = (ListView) rootView.findViewById(R.id.list);
 
         mEmptyStateTextView = (TextView) rootView.findViewById(R.id.empty_view);
         postListView.setEmptyView(mEmptyStateTextView);
 
-        mPostAdapter = new PostAdapter(this.getContext(), new ArrayList<Post>());
+        mPostAdapter = new PostAdapter(this.getContext(), new ArrayList<Post>(), category);
 
         postListView.setAdapter(mPostAdapter);
 
         // Get the list of all posts here
-        category = this.getArguments().getString("category");
 
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(0, null, this);
