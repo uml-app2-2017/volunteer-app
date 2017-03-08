@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
     
@@ -203,14 +205,15 @@
 
     </ScrollView>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/edit_profile_button"
-        android:text="Edit"
-        android:textSize="30dp"
-        android:textColor="@color/colorWhiteFont"
-        android:background="@color/colorPrimary"
-        android:layout_alignParentBottom="true"/>
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_pencil"
+        android.support.design:fabSize="normal"
+        android.support.design:useCompatPadding="true"/>
 
 </RelativeLayout>
