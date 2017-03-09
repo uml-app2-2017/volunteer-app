@@ -15,23 +15,26 @@ import java.util.ArrayList;
  */
 
 public class CommunityActivity extends AppCompatActivity {
+
+    static int star_on = 17301516;
+    static int star_off = 17301515;
    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
-        // Create a list of songs
+        // Create a list of Achievements
         ArrayList<Achievement> achs = new ArrayList<Achievement>();
-        achs.add(new Achievement("The Airborne Toxic Event", "All I Ever Wanted", 17301515));
-        achs.add(new Achievement("Blackstreet", "No Diggity", 17301515));
-        achs.add(new Achievement("Blue Swede", "Hooked On A Feeling", 17301516));
-        achs.add(new Achievement("Bastille", "Icarus", 17301515));
-        achs.add(new Achievement("Avicii", "Addicted To You", 17301516));
-        achs.add(new Achievement("Takafumi Wada", "Assailing Ones", 17301516));
-        achs.add(new Achievement("Hurts", "Somebody To Die For", 17301515));
-        achs.add(new Achievement("Mystery Skulls", "Ghost", 17301515));
-        achs.add(new Achievement("SNBRN", "Raindrops", 17301516));
-        achs.add(new Achievement("One Republic", "I Lived", 17301516));
+        achs.add(new Achievement("The Airborne Toxic Event", "All I Ever Wanted", star_off));
+        achs.add(new Achievement("Blackstreet", "No Diggity", star_off));
+        achs.add(new Achievement("Blue Swede", "Hooked On A Feeling", star_on));
+        achs.add(new Achievement("Bastille", "Icarus", star_off));
+        achs.add(new Achievement("Avicii", "Addicted To You", star_on));
+        achs.add(new Achievement("Takafumi Wada", "Assailing Ones", star_on));
+        achs.add(new Achievement("Hurts", "Somebody To Die For", star_off));
+        achs.add(new Achievement("Mystery Skulls", "Ghost", star_off));
+        achs.add(new Achievement("SNBRN", "Raindrops", star_on));
+        achs.add(new Achievement("One Republic", "I Lived", star_on));
 
         // Create an {@link AchievementAdapter}, whose data source is a list of {@link Achievement}s. The
         // adapter knows how to create list items for each item in the list.
