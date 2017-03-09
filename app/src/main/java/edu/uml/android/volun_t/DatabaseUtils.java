@@ -115,14 +115,12 @@ public class DatabaseUtils {
     private void setCompletedPosts() {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         for (int i = 0; i < currentUser.getCompletedPosts().size(); i++) {
-            db.child("completedPosts").child(currentUser.getPendingPosts().get(i))
+            db.child("completedPosts").child(currentUser.getCompletedPosts().get(i))
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Post post = dataSnapshot.getValue(Post.class);
                             addToCompleted(post);
-                            if (DatabaseUtils.this.completedPosts.size() == numCompleted)
-                                com = true;
                         }
 
                         @Override
@@ -155,7 +153,7 @@ public class DatabaseUtils {
     private void addToCompleted(Post post) {
         completedPosts.add(post);
         if (completedPosts.size() == numCompleted)
-            pen = true;
+            com = true;
     }
 
     private void getUser() {

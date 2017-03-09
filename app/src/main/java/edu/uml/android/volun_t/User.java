@@ -68,6 +68,8 @@ public class User {
     public boolean getHandicap() { return handicap; }
     public int getLevel() { return level; }
     public int getLevelProgress() { return levelProgress; }
+    public void setLevel(int level) { this.level = level; }
+    public void setLevelProgress(int lp) { this.levelProgress = lp; }
     public ArrayList<String> getPendingPosts() {
         return pendingPosts;
     }
