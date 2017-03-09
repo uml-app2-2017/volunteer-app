@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:android.support.design="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
@@ -47,6 +49,16 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
+            <EditText
+                android:id="@+id/profile_name_field_edit"
+                android:text="Merideth Smith"
+                android:textSize="18dp"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,18 +85,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/profile_street_address_field"
+                android:id="@+id/profile_address_field"
                 android:text="327 Aiken St."
                 android:textSize="18dp"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
-            <TextView
+            <EditText
+                android:id="@+id/profile_address_field_edit"
+                android:text="Merideth Smith"
+                android:textSize="18dp"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/profile_city_address_field"
-                android:text="Lowell, MA 01854"
-                android:textSize="18dp"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
@@ -104,18 +117,33 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+            <EditText
+                android:id="@+id/profile_phone_field_edit"
+                android:text="Merideth Smith"
+                android:textSize="18dp"
+                android:inputType="number"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
         </LinearLayout>
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/edit_profile_button"
-        android:text="Edit"
-        android:textSize="30dp"
-        android:textColor="@color/colorWhiteFont"
-        android:background="@color/colorPrimary"
-        android:layout_alignParentBottom="true"/>
+        app:backgroundTint="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_pencil"
+        android.support.design:fabSize="normal"
+        android.support.design:useCompatPadding="true"/>
 
 </RelativeLayout>

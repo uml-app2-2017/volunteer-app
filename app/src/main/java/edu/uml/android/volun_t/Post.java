@@ -160,6 +160,8 @@ public class Post implements Serializable {
 
     public String getTakerName() { return takerName; }
 
+    public void setTakerName(String name) { this.takerName = name; }
+
     public boolean acceptPost(String takerUid) {
         this.takerUid = takerUid;
         taken = true;

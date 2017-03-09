@@ -7,11 +7,16 @@ On the other hand, if you require assistance, Volun-T is your solution, too! Our
 This is an android based mobile application developed by Adam Gaudreau, Timothy Larcque, and Ashley Hale for our Mobile App Development 2 class at UML.
 
 ## VERSION 3 INFO
-TBD
+Implemented workflow, so now users can request help, accept help, complete plans, and cancel them at any time. Improvements were made to layout and profile views as well.
 
 Adam:
+- Implemented workflow.
+- Minor UI changes.
 
 Tim:
+- Worked on profile page, making real info show up.
+- Added FAB.
 
 Ashley:
-
+- Worked on community page some more.
+- Worked on profile page with Tim and Adam.

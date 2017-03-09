@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -15,6 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by adam on 3/7/17.
@@ -111,7 +115,15 @@ public class ViewPostActivity extends AppCompatActivity {
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Cancel plan here and delete post
+                        // Remove from user's pending
+                        ArrayList<String> temp = user.getPendingPosts();
+                        temp.remove(post.getPostId());
+                        user.setWaitingPosts(temp);
+                        db.child("users").child(uid).setValue(user);
+                        // Remove from actual pending
+                        db.child("pendingPosts").child(post.getPostId()).removeValue();
+                        Toast.makeText(ViewPostActivity.this, "Post deleted!", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
             } else if (category.equals("accepted")) {
@@ -119,7 +131,30 @@ public class ViewPostActivity extends AppCompatActivity {
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Cancel plan here and delete post
+                        // Remove from user's accepted
+                        ArrayList<String> temp = user.getAcceptedPosts();
+                        temp.remove(post.getPostId());
+                        user.setAcceptedPosts(temp);
+                        db.child("users").child(uid).setValue(user);
+                        // Remove from taker's accepted
+                        db.child("users").child(post.getTakerUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User taker = dataSnapshot.getValue(User.class);
+                                ArrayList<String> temp = taker.getAcceptedPosts();
+                                temp.remove(post.getPostId());
+                                taker.setAcceptedPosts(temp);
+                                db.child("users").child(post.getTakerUid()).setValue(taker);
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        // Remove from actual pending
+                        db.child("acceptedPosts").child(post.getPostId()).removeValue();
+                        Toast.makeText(ViewPostActivity.this, "Post deleted!", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
                 complete.setVisibility(View.VISIBLE);
@@ -127,6 +162,47 @@ public class ViewPostActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         // Change status of post to complete
+                        // Move post from user's accepted to completed
+                        ArrayList<String> acc = user.getAcceptedPosts(), comp = user.getCompletedPosts();
+                        acc.remove(post.getPostId());
+                        comp.add(post.getPostId());
+                        user.setAcceptedPosts(acc);
+                        user.setCompletedPosts(comp);
+                        db.child("users").child(uid).setValue(user);
+                        // Move post from taker's accepted to complted
+                        db.child("users").child(post.getTakerUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User taker = dataSnapshot.getValue(User.class);
+                                ArrayList<String> acc = taker.getAcceptedPosts(), comp = taker.getCompletedPosts();
+                                acc.remove(post.getPostId());
+                                comp.add(post.getPostId());
+                                taker.setAcceptedPosts(acc);
+                                taker.setCompletedPosts(comp);
+                                // Update user level
+                                int level = taker.getLevel(), levelProgress = taker.getLevelProgress();
+                                levelProgress++;
+                                if (levelProgress == 10) {
+                                    levelProgress = 0;
+                                    level++;
+                                }
+                                taker.setLevel(level);
+                                taker.setLevelProgress(levelProgress);
+                                db.child("users").child(post.getTakerUid()).setValue(taker);
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        // Move post from acceptedPosts to completedPosts
+                        post.setCompleted(true);
+                        Calendar cal = Calendar.getInstance();
+                        post.setTimeCompleted(post.getFormattedTime(cal));
+                        db.child("acceptedPosts").child(post.getPostId()).removeValue();
+                        db.child("completedPosts").child(post.getPostId()).setValue(post);
+                        Toast.makeText(ViewPostActivity.this, "Post completed!", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
             }
@@ -137,6 +213,29 @@ public class ViewPostActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         // Cancel plan here
+                        // Remove post from takers accepted
+                        db.child("users").child(post.getTakerUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User taker = dataSnapshot.getValue(User.class);
+                                ArrayList<String> acc = taker.getAcceptedPosts();
+                                acc.remove(post.getPostId());
+                                taker.setAcceptedPosts(acc);
+                                db.child("users").child(post.getTakerUid()).setValue(taker);
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        post.setTaken(false);
+                        post.setTakerUid(null);
+                        post.setTakerName(null);
+                        // Move from accepted to pending
+                        db.child("acceptedPosts").child(post.getPostId()).removeValue();
+                        db.child("pendingPosts").child(post.getPostId()).setValue(post);
+                        Toast.makeText(ViewPostActivity.this, "Post cancelled!", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
             }
@@ -146,6 +245,36 @@ public class ViewPostActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         // Accept post here
+                        // Add to accepted for user
+                        ArrayList<String> acc = user.getAcceptedPosts();
+                        acc.add(post.getPostId());
+                        user.setAcceptedPosts(acc);
+                        db.child("users").child(uid).setValue(user);
+                        // Move from pending to accepted for requester
+                        db.child("users").child(post.getRequesterUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                User requester = dataSnapshot.getValue(User.class);
+                                ArrayList<String> acc = requester.getAcceptedPosts(), pen = requester.getPendingPosts();
+                                acc.add(post.getPostId());
+                                pen.remove(post.getPostId());
+                                requester.setAcceptedPosts(acc);
+                                requester.setWaitingPosts(pen);
+                                db.child("users").child(post.getRequesterUid()).setValue(requester);
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        // Move from pendingPosts to acceptedPosts
+                        post.setTaken(true);
+                        post.setTakerUid(uid);
+                        post.setTakerName(user.getFirst() + " " + user.getLast());
+                        db.child("pendingPosts").child(post.getPostId()).removeValue();
+                        db.child("acceptedPosts").child(post.getPostId()).setValue(post);
+                        Toast.makeText(ViewPostActivity.this, "You accepted this post!", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
                 });
             }
