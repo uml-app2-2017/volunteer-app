@@ -115,8 +115,8 @@ public class ProfileActivity extends AppCompatActivity {
         vMakeEdit.setText(user.getMake() + " " + user.getModel());
         vPlateText.setText(user.getPlate());
         vPlateEdit.setText(user.getPlate());
-        vSeatsText.setText(user.getSeats());
-        vSeatsEdit.setText(user.getSeats());
+        vSeatsText.setText("" + user.getSeats());
+        vSeatsEdit.setText("" + user.getSeats());
         if (user.getHandicap()) {
             vHandicapText.setText("Yes");
             vHandicapEdit.setChecked(true);
