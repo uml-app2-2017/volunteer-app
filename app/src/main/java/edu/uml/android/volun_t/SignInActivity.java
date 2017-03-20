@@ -1,14 +1,22 @@
 package edu.uml.android.volun_t;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,6 +53,30 @@ public class SignInActivity extends AppCompatActivity {
         loginButton = (Button) findViewById(R.id.login_button);
         emailField = (EditText) findViewById(R.id.sign_in_email_field);
         passwordField = (EditText) findViewById(R.id.sign_in_password_field);
+        TextView forgot = (TextView) findViewById(R.id.forgot_password);
+        forgot.setPaintFlags(forgot.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+
+        // Send password reset email if user forgot it
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.child("users").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        String email = user.getEmail();
+                        auth.sendPasswordResetEmail(email);
+                        Toast.makeText(getApplicationContext(), "Password reset email sent!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w("ERROR", "Failed to read value.", error.toException());
+                    }
+                });
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,13 +102,41 @@ public class SignInActivity extends AppCompatActivity {
                                 if (!task.isSuccessful()) {
                                     passwordField.setError("Password incorrect or account does not exist.");
                                 } else {
-                                    getUserTypeAndLogin();
+                                    if (auth.getCurrentUser().isEmailVerified())
+                                        getUserTypeAndLogin();
+                                    else
+                                        createPopup();
                                 }
                             }
                         });
             }
         });
 
+    }
+
+    protected void createPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Your email has not been verified, so you may not sign in at this time." +
+                " Would you like to resend the verification email?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            user.sendEmailVerification();
+                            auth.signOut();
+                        }
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        auth.signOut();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     protected void getUserTypeAndLogin() {

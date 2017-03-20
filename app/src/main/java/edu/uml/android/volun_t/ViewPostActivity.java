@@ -1,7 +1,10 @@
 package edu.uml.android.volun_t;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -10,7 +13,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -115,15 +121,32 @@ public class ViewPostActivity extends AppCompatActivity {
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Remove from user's pending
-                        ArrayList<String> temp = user.getPendingPosts();
-                        temp.remove(post.getPostId());
-                        user.setWaitingPosts(temp);
-                        db.child("users").child(uid).setValue(user);
-                        // Remove from actual pending
-                        db.child("pendingPosts").child(post.getPostId()).removeValue();
-                        Toast.makeText(ViewPostActivity.this, "Post deleted!", Toast.LENGTH_SHORT).show();
-                        finish();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ViewPostActivity.this);
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        // Remove from user's pending
+                                        ArrayList<String> temp = user.getPendingPosts();
+                                        temp.remove(post.getPostId());
+                                        user.setWaitingPosts(temp);
+                                        db.child("users").child(uid).setValue(user);
+                                        // Remove from actual pending
+                                        db.child("pendingPosts").child(post.getPostId()).removeValue();
+                                        Toast.makeText(ViewPostActivity.this, "Post deleted!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        dialog.cancel();
+                                        break;
+                                }
+                            }
+                        };
+
+                        builder.setMessage("Are you sure you want to delete this post?").setPositiveButton("Yes", dialogClickListener)
+                                .setNegativeButton("No", dialogClickListener).show();
                     }
                 });
             } else if (category.equals("accepted")) {
@@ -131,30 +154,47 @@ public class ViewPostActivity extends AppCompatActivity {
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Remove from user's accepted
-                        ArrayList<String> temp = user.getAcceptedPosts();
-                        temp.remove(post.getPostId());
-                        user.setAcceptedPosts(temp);
-                        db.child("users").child(uid).setValue(user);
-                        // Remove from taker's accepted
-                        db.child("users").child(post.getTakerUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ViewPostActivity.this);
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                             @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                User taker = dataSnapshot.getValue(User.class);
-                                ArrayList<String> temp = taker.getAcceptedPosts();
-                                temp.remove(post.getPostId());
-                                taker.setAcceptedPosts(temp);
-                                db.child("users").child(post.getTakerUid()).setValue(taker);
-                            }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        // Remove from user's accepted
+                                        ArrayList<String> temp = user.getAcceptedPosts();
+                                        temp.remove(post.getPostId());
+                                        user.setAcceptedPosts(temp);
+                                        db.child("users").child(uid).setValue(user);
+                                        // Remove from taker's accepted
+                                        db.child("users").child(post.getTakerUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                User taker = dataSnapshot.getValue(User.class);
+                                                ArrayList<String> temp = taker.getAcceptedPosts();
+                                                temp.remove(post.getPostId());
+                                                taker.setAcceptedPosts(temp);
+                                                db.child("users").child(post.getTakerUid()).setValue(taker);
+                                            }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
 
+                                            }
+                                        });
+                                        // Remove from actual pending
+                                        db.child("acceptedPosts").child(post.getPostId()).removeValue();
+                                        Toast.makeText(ViewPostActivity.this, "Post deleted!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        dialog.cancel();
+                                        break;
+                                }
                             }
-                        });
-                        // Remove from actual pending
-                        db.child("acceptedPosts").child(post.getPostId()).removeValue();
-                        Toast.makeText(ViewPostActivity.this, "Post deleted!", Toast.LENGTH_SHORT).show();
-                        finish();
+                        };
+
+                        builder.setMessage("Are you sure you want to delete this post?").setPositiveButton("Yes", dialogClickListener)
+                                .setNegativeButton("No", dialogClickListener).show();
                     }
                 });
                 complete.setVisibility(View.VISIBLE);
@@ -212,30 +252,66 @@ public class ViewPostActivity extends AppCompatActivity {
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Cancel plan here
-                        // Remove post from takers accepted
-                        db.child("users").child(post.getTakerUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ViewPostActivity.this);
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                             @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                User taker = dataSnapshot.getValue(User.class);
-                                ArrayList<String> acc = taker.getAcceptedPosts();
-                                acc.remove(post.getPostId());
-                                taker.setAcceptedPosts(acc);
-                                db.child("users").child(post.getTakerUid()).setValue(taker);
-                            }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        // Cancel plan here
+                                        // Remove post from takers accepted
+                                        db.child("users").child(post.getTakerUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                User taker = dataSnapshot.getValue(User.class);
+                                                ArrayList<String> acc = taker.getAcceptedPosts();
+                                                acc.remove(post.getPostId());
+                                                taker.setAcceptedPosts(acc);
+                                                db.child("users").child(post.getTakerUid()).setValue(taker);
+                                                // Move from requesters accepted to pending
+                                                db.child("users").child(post.getRequesterUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        User requester = dataSnapshot.getValue(User.class);
+                                                        ArrayList<String> acc = requester.getAcceptedPosts();
+                                                        ArrayList<String> pen = requester.getPendingPosts();
+                                                        acc.remove(post.getPostId());
+                                                        pen.add(post.getPostId());
+                                                        requester.setAcceptedPosts(acc);
+                                                        requester.setWaitingPosts(pen);
+                                                        db.child("users").child(post.getRequesterUid()).setValue(requester);
+                                                        post.setTaken(false);
+                                                        post.setTakerUid(null);
+                                                        post.setTakerName(null);
+                                                        // Move from accepted to pending
+                                                        db.child("acceptedPosts").child(post.getPostId()).removeValue();
+                                                        db.child("pendingPosts").child(post.getPostId()).setValue(post);
+                                                    }
 
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                            }
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                        Toast.makeText(ViewPostActivity.this, "Post cancelled!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        dialog.cancel();
+                                        break;
+                                }
                             }
-                        });
-                        post.setTaken(false);
-                        post.setTakerUid(null);
-                        post.setTakerName(null);
-                        // Move from accepted to pending
-                        db.child("acceptedPosts").child(post.getPostId()).removeValue();
-                        db.child("pendingPosts").child(post.getPostId()).setValue(post);
-                        Toast.makeText(ViewPostActivity.this, "Post cancelled!", Toast.LENGTH_SHORT).show();
-                        finish();
+                        };
+
+                        builder.setMessage("Are you sure you want to delete this post?").setPositiveButton("Yes", dialogClickListener)
+                                .setNegativeButton("No", dialogClickListener).show();
                     }
                 });
             }

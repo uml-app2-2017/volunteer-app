@@ -89,6 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     Toast.makeText(SignUpActivity.this, "Account created!",
                                             Toast.LENGTH_SHORT).show();
                                     addUserToDatabase(user);
+                                    sendVerificationEmail();
                                     startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
                                     finish();
                                 }
@@ -131,6 +132,22 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(new Intent(SignUpActivity.this, StartupActivity.class));
             }
         });
+    }
+
+    protected void sendVerificationEmail() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            user.sendEmailVerification()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                // It worked
+                            }
+                        }
+                    });
+        }
     }
 
     protected User createUser() {
