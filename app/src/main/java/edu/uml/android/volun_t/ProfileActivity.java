@@ -2,11 +2,15 @@ package edu.uml.android.volun_t;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,6 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 /**
  * Created by adam on 3/2/17.
@@ -33,6 +40,9 @@ public class ProfileActivity extends AppCompatActivity {
     TextView vNameText, vAddressText, vPhoneText, vMakeText, vPlateText, vSeatsText, vHandicapText, vEmailText;
     EditText vNameEdit, vAddressEdit, vPhoneEdit, vMakeEdit, vPlateEdit, vSeatsEdit;
     CheckBox vHandicapEdit;
+
+    FloatingActionButton edit_button;
+    private Boolean edit_mode = FALSE;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,9 +64,105 @@ public class ProfileActivity extends AppCompatActivity {
                 if (userType == 0) {
                     setContentView(R.layout.activity_cprofile);
                     setupClientViews();
+                    edit_button = (FloatingActionButton) findViewById(R.id.edit_profile_button);
+
+                    edit_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(edit_mode == FALSE) {
+                                edit_button.setImageResource(R.mipmap.ic_done);
+
+                                cNameText.setVisibility(View.GONE);
+                                cAddressText.setVisibility(View.GONE);
+                                cPhoneText.setVisibility(View.GONE);
+
+                                cNameEdit.setVisibility(View.VISIBLE);
+                                cAddressEdit.setVisibility(View.VISIBLE);
+                                cPhoneEdit.setVisibility(View.VISIBLE);
+
+                                edit_mode = TRUE;
+                            } else if (edit_mode == TRUE){
+                                edit_button.setImageResource(R.mipmap.ic_pencil);
+
+                                cNameText.setVisibility(View.VISIBLE);
+                                cAddressText.setVisibility(View.VISIBLE);
+                                cPhoneText.setVisibility(View.VISIBLE);
+
+                                cNameEdit.setVisibility(View.GONE);
+                                cAddressEdit.setVisibility(View.GONE);
+                                cPhoneEdit.setVisibility(View.GONE);
+
+                                edit_mode = FALSE;
+
+                                // Temp place holder for setting to Firebase
+                                cNameText.setText(cNameEdit.getText());
+                                cAddressText.setText(cAddressEdit.getText());
+                                cPhoneText.setText(cPhoneEdit.getText());
+                            }
+                        }
+                    });
                 } else if (userType == 1) {
                     setContentView(R.layout.activity_vprofile);
                     setupVolunteerViews();
+                    edit_button = (FloatingActionButton) findViewById(R.id.edit_profile_button);
+
+                    edit_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(edit_mode == FALSE) {
+                                edit_button.setImageResource(R.mipmap.ic_done);
+
+                                vNameText.setVisibility(View.GONE);
+                                vAddressText.setVisibility(View.GONE);
+                                vPhoneText.setVisibility(View.GONE);
+                                vMakeText.setVisibility(View.GONE);
+                                vPlateText.setVisibility(View.GONE);
+                                vSeatsText.setVisibility(View.GONE);
+                                vHandicapText.setVisibility(View.GONE);
+
+                                vNameEdit.setVisibility(View.VISIBLE);
+                                vAddressEdit.setVisibility(View.VISIBLE);
+                                vPhoneEdit.setVisibility(View.VISIBLE);
+                                vMakeEdit.setVisibility(View.VISIBLE);
+                                vPlateEdit.setVisibility(View.VISIBLE);
+                                vSeatsEdit.setVisibility(View.VISIBLE);
+                                vHandicapEdit.setVisibility(View.VISIBLE);
+
+                                edit_mode = TRUE;
+                            } else if (edit_mode == TRUE){
+                                edit_button.setImageResource(R.mipmap.ic_pencil);
+
+                                vNameText.setVisibility(View.VISIBLE);
+                                vAddressText.setVisibility(View.VISIBLE);
+                                vPhoneText.setVisibility(View.VISIBLE);
+                                vMakeText.setVisibility(View.VISIBLE);
+                                vPlateText.setVisibility(View.VISIBLE);
+                                vSeatsText.setVisibility(View.VISIBLE);
+                                vHandicapText.setVisibility(View.VISIBLE);
+
+                                vNameEdit.setVisibility(View.GONE);
+                                vAddressEdit.setVisibility(View.GONE);
+                                vPhoneEdit.setVisibility(View.GONE);
+                                vMakeEdit.setVisibility(View.GONE);
+                                vPlateEdit.setVisibility(View.GONE);
+                                vSeatsEdit.setVisibility(View.GONE);
+                                vHandicapEdit.setVisibility(View.GONE);
+
+                                edit_mode = FALSE;
+
+                                // Temp place holder for setting to Firebase
+                                vNameText.setText(vNameEdit.getText());
+                                vAddressText.setText(vAddressEdit.getText());
+                                vPhoneText.setText(vPhoneEdit.getText());
+                                vMakeText.setText(vMakeEdit.getText());
+                                vPlateText.setText(vPlateEdit.getText());
+                                vSeatsText.setText(vSeatsEdit.getText());
+                                if(vHandicapEdit.isChecked()){
+                                    vHandicapText.setText("Yes");
+                                } else {vHandicapText.setText("No");}
+                            }
+                        }
+                    });
                 }
             }
 
