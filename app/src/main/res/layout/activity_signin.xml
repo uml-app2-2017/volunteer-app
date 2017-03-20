@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:id="@+id/bubble"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:background="@drawable/drawable_rectangle"
             android:layout_centerInParent="true">
@@ -60,6 +61,15 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/forgot_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Forgot your password?"
+            android:layout_alignTop="@id/bubble"
+            android:gravity="center"
+            android:textColor="@color/colorWhiteFont" />
 
     </LinearLayout>
 
