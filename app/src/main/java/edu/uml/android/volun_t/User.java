@@ -88,4 +88,44 @@ public class User {
     public void setCompletedPosts(ArrayList<String> completedPosts) {
         this.completedPosts = completedPosts;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFirst(String first) {
+        this.first = first;
+    }
+
+    public void setLast(String last) {
+        this.last = last;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setPlate(String plate) {
+        this.plate = plate;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+
+    public void setHandicap(boolean handicap) {
+        this.handicap = handicap;
+    }
 }

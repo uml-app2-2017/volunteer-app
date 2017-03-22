@@ -98,6 +98,13 @@ public class ProfileActivity extends AppCompatActivity {
                                 cNameText.setText(cNameEdit.getText());
                                 cAddressText.setText(cAddressEdit.getText());
                                 cPhoneText.setText(cPhoneEdit.getText());
+
+                                int temp = cNameText.getText().toString().lastIndexOf(" ");
+                                user.setFirst(cNameText.getText().toString().substring(0, temp));
+                                user.setLast(cNameText.getText().toString().substring(temp+1, cNameText.getText().toString().length()));
+                                user.setPhone(cPhoneText.getText().toString());
+                                user.setAddress(cAddressText.getText().toString());
+                                updateUserToDatabase();
                             }
                         }
                     });
@@ -150,7 +157,6 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 edit_mode = FALSE;
 
-                                // Temp place holder for setting to Firebase
                                 vNameText.setText(vNameEdit.getText());
                                 vAddressText.setText(vAddressEdit.getText());
                                 vPhoneText.setText(vPhoneEdit.getText());
@@ -160,6 +166,18 @@ public class ProfileActivity extends AppCompatActivity {
                                 if(vHandicapEdit.isChecked()){
                                     vHandicapText.setText("Yes");
                                 } else {vHandicapText.setText("No");}
+
+                                // Update to firebase db
+                                int temp = vNameText.getText().toString().lastIndexOf(" ");
+                                user.setFirst(vNameText.getText().toString().substring(0, temp));
+                                user.setLast(vNameText.getText().toString().substring(temp+1, vNameText.getText().toString().length()));
+                                user.setPhone(vPhoneText.getText().toString());
+                                user.setAddress(vAddressText.getText().toString());
+                                user.setMake(vMakeText.getText().toString());
+                                user.setPlate(vPlateText.getText().toString());
+                                user.setSeats(Integer.parseInt(vSeatsText.getText().toString()));
+                                user.setHandicap(vHandicapEdit.isChecked());
+                                updateUserToDatabase();
                             }
                         }
                     });
@@ -232,7 +250,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void updateUserToDatabse() {
+    public void updateUserToDatabase() {
         db.child("users").child(auth.getCurrentUser().getUid()).setValue(user);
     }
 
