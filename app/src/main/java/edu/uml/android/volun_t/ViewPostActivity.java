@@ -25,6 +25,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by adam on 3/7/17.
@@ -183,6 +185,8 @@ public class ViewPostActivity extends AppCompatActivity {
                                         // Remove from actual pending
                                         db.child("acceptedPosts").child(post.getPostId()).removeValue();
                                         Toast.makeText(ViewPostActivity.this, "Post deleted!", Toast.LENGTH_SHORT).show();
+                                        sendNotificationToUser(post.getTakerUid(), "You can still help out though!",
+                                                user.getFirst() + " has cancelled their plans.");
                                         finish();
                                         break;
 
@@ -242,6 +246,8 @@ public class ViewPostActivity extends AppCompatActivity {
                         db.child("acceptedPosts").child(post.getPostId()).removeValue();
                         db.child("completedPosts").child(post.getPostId()).setValue(post);
                         Toast.makeText(ViewPostActivity.this, "Post completed!", Toast.LENGTH_SHORT).show();
+                        sendNotificationToUser(post.getTakerUid(), "Thank you for helping!",
+                                user.getFirst() + " has completed your post!");
                         finish();
                     }
                 });
@@ -300,6 +306,8 @@ public class ViewPostActivity extends AppCompatActivity {
                                             }
                                         });
                                         Toast.makeText(ViewPostActivity.this, "Post cancelled!", Toast.LENGTH_SHORT).show();
+                                        sendNotificationToUser(post.getRequesterUid(), "Your plan has been reopenned to the public.",
+                                                user.getFirst() + " has cancelled your plans.");
                                         finish();
                                         break;
 
@@ -371,6 +379,17 @@ public class ViewPostActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public static void sendNotificationToUser(String uid, String message, String title) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        Map notification = new HashMap<>();
+        notification.put("uid", uid);
+        notification.put("message", message);
+        notification.put("title", title);
+
+        ref.child("notificationRequests").push().setValue(notification);
     }
 
 }
