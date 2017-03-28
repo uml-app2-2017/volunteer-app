@@ -53,7 +53,7 @@ public class Post implements Serializable {
         try {
             String posted = "" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" +
                     + c.get(Calendar.YEAR) + "   " + c.get(Calendar.HOUR) + ":"
-                    + c.get(Calendar.MINUTE) + ":" + c.get(Calendar.SECOND);
+                    + c.get(Calendar.MINUTE);
             return posted;
         } catch (NullPointerException e) {
             return "";

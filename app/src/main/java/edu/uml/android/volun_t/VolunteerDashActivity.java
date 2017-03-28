@@ -45,7 +45,7 @@ public class VolunteerDashActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance().getReference();
 
         // Get user reference
-        db.child("users").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+        db.child("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
