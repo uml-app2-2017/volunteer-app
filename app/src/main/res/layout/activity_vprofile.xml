@@ -280,8 +280,21 @@
         app:backgroundTint="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@mipmap/ic_pencil"
+        android:src="@mipmap/ic_pencil_white"
         android.support.design:fabSize="normal"
         android.support.design:useCompatPadding="true"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancel_edit_profile_button"
+        android:backgroundTint="#FF0000"
+        android:src="@mipmap/ic_cancel"
+        android.support.design:fabSize="normal"
+        android.support.design:useCompatPadding="true"
+        android:visibility="gone"
+        android:layout_marginBottom="63dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
