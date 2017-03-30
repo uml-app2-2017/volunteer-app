@@ -3,7 +3,9 @@ package edu.uml.android.volun_t;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -43,6 +45,7 @@ public class AskHelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_askhelp);
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseDatabase.getInstance().getReference();
@@ -108,7 +111,7 @@ public class AskHelpActivity extends AppCompatActivity {
         boolean handicap = mHandicapField.isChecked();
         when.set(Calendar.YEAR, mDateField.getYear());
         when.set(Calendar.MONTH, mDateField.getMonth());
-        when.set(Calendar.DAY_OF_MONTH, mDateField.getDayOfMonth());
+        when.set(Calendar.DAY_OF_MONTH, mDateField.getDayOfMonth() - 1);
         when.set(Calendar.HOUR, mTimeField.getHour());
         when.set(Calendar.MINUTE, mTimeField.getMinute());
         String location = street + " " + city + ", " + state + ", " + zip;

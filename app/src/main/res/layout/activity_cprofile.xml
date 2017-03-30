@@ -52,6 +52,9 @@
 
             <EditText
                 android:id="@+id/profile_name_field_edit"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
                 android:text="Merideth Smith"
                 android:textSize="18dp"
                 android:visibility="gone"
@@ -94,6 +97,9 @@
 
             <EditText
                 android:id="@+id/profile_address_field_edit"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
                 android:text="Merideth Smith"
                 android:textSize="18dp"
                 android:visibility="gone"
@@ -121,6 +127,8 @@
 
             <EditText
                 android:id="@+id/profile_phone_field_edit"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
                 android:text="Merideth Smith"
                 android:textSize="18dp"
                 android:inputType="number"
@@ -151,7 +159,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cancel_edit_profile_button"
-        android:backgroundTint="#FF0000"
+        app:backgroundTint="#FF0000"
         android:src="@mipmap/ic_cancel"
         android.support.design:fabSize="normal"
         android.support.design:useCompatPadding="true"

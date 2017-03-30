@@ -51,9 +51,9 @@ public class Post implements Serializable {
 
     public String getFormattedTime(Calendar c) {
         try {
-            String posted = "" + c.get(Calendar.MONTH) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" +
-                    + c.get(Calendar.YEAR) + "   " + c.get(Calendar.HOUR) + ":"
-                    + c.get(Calendar.MINUTE);
+            String posted = "" + (c.get(Calendar.MONTH)+1) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" +
+                    + c.get(Calendar.YEAR) + "  @  " + c.get(Calendar.HOUR) + ":"
+                    + String.format("%02d", c.get(Calendar.MINUTE));
             return posted;
         } catch (NullPointerException e) {
             return "";
