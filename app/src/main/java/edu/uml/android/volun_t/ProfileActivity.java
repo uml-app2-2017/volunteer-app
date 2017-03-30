@@ -41,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     EditText vNameEdit, vAddressEdit, vPhoneEdit, vMakeEdit, vPlateEdit, vSeatsEdit;
     CheckBox vHandicapEdit;
 
-    FloatingActionButton edit_button;
+    FloatingActionButton edit_button, cancel_button;
     private Boolean edit_mode = FALSE;
 
     @Override
@@ -65,12 +65,14 @@ public class ProfileActivity extends AppCompatActivity {
                     setContentView(R.layout.activity_cprofile);
                     setupClientViews();
                     edit_button = (FloatingActionButton) findViewById(R.id.edit_profile_button);
+                    cancel_button = (FloatingActionButton) findViewById(R.id.cancel_edit_profile_button);
 
                     edit_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             if(edit_mode == FALSE) {
-                                edit_button.setImageResource(R.mipmap.ic_done);
+                                edit_button.setImageResource(R.mipmap.ic_done_white);
+                                cancel_button.setVisibility(View.VISIBLE); //
 
                                 cNameText.setVisibility(View.GONE);
                                 cAddressText.setVisibility(View.GONE);
@@ -82,7 +84,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 edit_mode = TRUE;
                             } else if (edit_mode == TRUE){
-                                edit_button.setImageResource(R.mipmap.ic_pencil);
+                                edit_button.setImageResource(R.mipmap.ic_pencil_white);
+                                cancel_button.setVisibility(View.GONE); //
 
                                 cNameText.setVisibility(View.VISIBLE);
                                 cAddressText.setVisibility(View.VISIBLE);
@@ -108,16 +111,40 @@ public class ProfileActivity extends AppCompatActivity {
                             }
                         }
                     });
+
+                    cancel_button.setOnClickListener(new View.OnClickListener() { //
+                        @Override
+                        public void onClick(View view) {
+                            edit_button.setImageResource(R.mipmap.ic_pencil_white);
+                            cancel_button.setVisibility(View.GONE);
+
+                            cNameText.setVisibility(View.VISIBLE);
+                            cAddressText.setVisibility(View.VISIBLE);
+                            cPhoneText.setVisibility(View.VISIBLE);
+
+                            cNameEdit.setVisibility(View.GONE);
+                            cAddressEdit.setVisibility(View.GONE);
+                            cPhoneEdit.setVisibility(View.GONE);
+
+                            cNameEdit.setText(cNameText.getText());
+                            cAddressEdit.setText(cAddressText.getText());
+                            cPhoneEdit.setText(cPhoneText.getText());
+
+                            edit_mode = FALSE;
+                        }
+                    });
                 } else if (userType == 1) {
                     setContentView(R.layout.activity_vprofile);
                     setupVolunteerViews();
                     edit_button = (FloatingActionButton) findViewById(R.id.edit_profile_button);
+                    cancel_button = (FloatingActionButton) findViewById(R.id.cancel_edit_profile_button); //
 
                     edit_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             if(edit_mode == FALSE) {
-                                edit_button.setImageResource(R.mipmap.ic_done);
+                                edit_button.setImageResource(R.mipmap.ic_done_white);
+                                cancel_button.setVisibility(View.VISIBLE); //
 
                                 vNameText.setVisibility(View.GONE);
                                 vAddressText.setVisibility(View.GONE);
@@ -137,7 +164,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 edit_mode = TRUE;
                             } else if (edit_mode == TRUE){
-                                edit_button.setImageResource(R.mipmap.ic_pencil);
+                                edit_button.setImageResource(R.mipmap.ic_pencil_white);
+                                cancel_button.setVisibility(View.GONE); //
 
                                 vNameText.setVisibility(View.VISIBLE);
                                 vAddressText.setVisibility(View.VISIBLE);
@@ -179,6 +207,42 @@ public class ProfileActivity extends AppCompatActivity {
                                 user.setHandicap(vHandicapEdit.isChecked());
                                 updateUserToDatabase();
                             }
+                        }
+                    });
+
+                    cancel_button.setOnClickListener(new View.OnClickListener() { //
+                        @Override
+                        public void onClick(View view) {
+                            edit_button.setImageResource(R.mipmap.ic_pencil_white);
+                            cancel_button.setVisibility(View.GONE);
+
+                            vNameText.setVisibility(View.VISIBLE);
+                            vAddressText.setVisibility(View.VISIBLE);
+                            vPhoneText.setVisibility(View.VISIBLE);
+                            vMakeText.setVisibility(View.VISIBLE);
+                            vPlateText.setVisibility(View.VISIBLE);
+                            vSeatsText.setVisibility(View.VISIBLE);
+                            vHandicapText.setVisibility(View.VISIBLE);
+
+                            vNameEdit.setVisibility(View.GONE);
+                            vAddressEdit.setVisibility(View.GONE);
+                            vPhoneEdit.setVisibility(View.GONE);
+                            vMakeEdit.setVisibility(View.GONE);
+                            vPlateEdit.setVisibility(View.GONE);
+                            vSeatsEdit.setVisibility(View.GONE);
+                            vHandicapEdit.setVisibility(View.GONE);
+
+                            vNameEdit.setText(vNameText.getText());
+                            vAddressEdit.setText(vAddressText.getText());
+                            vPhoneEdit.setText(vPhoneText.getText());
+                            vMakeEdit.setText(vMakeText.getText());
+                            vPlateEdit.setText(vPlateText.getText());
+                            vSeatsEdit.setText(vSeatsText.getText());
+                            if(vHandicapText.getText() == "Yes"){
+                                vHandicapEdit.setChecked(TRUE);
+                            } else {vHandicapEdit.setChecked(FALSE);}
+
+                            edit_mode = FALSE;
                         }
                     });
                 }
