@@ -38,6 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
 
         // Get the firebase authentication instance
         auth = FirebaseAuth.getInstance();
@@ -258,5 +259,12 @@ public class SignUpActivity extends AppCompatActivity {
 
         return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        super.onNavigateUp();
+    }
+
 
 }
