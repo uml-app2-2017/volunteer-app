@@ -30,4 +30,10 @@ public class PlansVActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setText("Completed");
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        super.onNavigateUp();
+    }
+
 }

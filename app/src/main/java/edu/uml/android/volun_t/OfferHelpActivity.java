@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -19,6 +22,7 @@ public class OfferHelpActivity extends AppCompatActivity implements LoaderManage
 
     private PostAdapter mPostAdapter;
     private TextView mEmptyStateTextView;
+    private LoaderManager loaderManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,7 @@ public class OfferHelpActivity extends AppCompatActivity implements LoaderManage
 
         postListView.setAdapter(mPostAdapter);
 
-        LoaderManager loaderManager = getSupportLoaderManager();
+        loaderManager = getSupportLoaderManager();
         loaderManager.initLoader(0, null, this);
     }
 
@@ -60,6 +64,31 @@ public class OfferHelpActivity extends AppCompatActivity implements LoaderManage
     public void onLoaderReset(Loader<DatabaseUtils> loader) {
         // Loader reset, so we can clear out our existing data.
         mPostAdapter.clear();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_offer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                loaderManager.restartLoader(0, null, this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        super.onNavigateUp();
     }
 
 }

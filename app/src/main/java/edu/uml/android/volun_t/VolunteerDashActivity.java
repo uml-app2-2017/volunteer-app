@@ -58,6 +58,8 @@ public class VolunteerDashActivity extends AppCompatActivity {
                 level.setText(Integer.toString(user.getLevel()));
                 progress.setProgress(user.getLevelProgress() * 10);
                 progressText.setText(Integer.toString(user.getLevelProgress()) + "/10");
+                // Get next plan
+                
             }
 
             @Override
@@ -67,17 +69,9 @@ public class VolunteerDashActivity extends AppCompatActivity {
             }
         });
 
-        CommunityButton = (Button) findViewById(R.id.your_community_button_vol);
         profileButton = (Button) findViewById(R.id.your_profile_button_vol);
         offerButton = (Button) findViewById(R.id.offer_help_button_vol);
         plansButton = (Button) findViewById(R.id.your_plans_button_vol);
-
-        CommunityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(VolunteerDashActivity.this, CommunityActivity.class));
-            }
-        });
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override

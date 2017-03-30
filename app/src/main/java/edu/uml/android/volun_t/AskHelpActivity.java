@@ -191,4 +191,10 @@ public class AskHelpActivity extends AppCompatActivity {
             return false;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        super.onNavigateUp();
+    }
+
 }

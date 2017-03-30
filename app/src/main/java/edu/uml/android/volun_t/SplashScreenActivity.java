@@ -25,6 +25,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
 
         db = FirebaseDatabase.getInstance().getReference();
 
