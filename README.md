@@ -6,17 +6,20 @@ On the other hand, if you require assistance, Volun-T is your solution, too! Our
 ## More Info
 This is an android based mobile application developed by Adam Gaudreau, Timothy Larcque, and Ashley Hale for our Mobile App Development 2 class at UML.
 
-## VERSION 3 INFO
-Implemented workflow, so now users can request help, accept help, complete plans, and cancel them at any time. Improvements were made to layout and profile views as well.
+## VERSION BETA INFO
+Workflow is fully working, with notifications notifications being pushed to users when a stage of the workflow has changed. Most bugs have been squashed. Our future plans are to polish up all user interfaces so they are smooth and modern.
+
 
 Adam:
-- Implemented workflow.
-- Minor UI changes.
+- Finished workflow and squashed related bugs.
+- Started Google App Engine server to handle notifications.
+- Added custom transitions from one activity to another.
+- Made form filling out more user friendly.
 
 Tim:
-- Worked on profile page, making real info show up.
-- Added FAB.
+- Worked on additional features to edit profile, such as a cancel button.
+- Fixed icons across all activities so that they are consistent.
 
 Ashley:
-- Worked on community page some more.
-- Worked on profile page with Tim and Adam.
+- Worked on profile activity as well.
+- Currently working on additional animations to replace boring toasts.
