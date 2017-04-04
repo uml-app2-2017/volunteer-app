@@ -45,6 +45,7 @@ public class ViewPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewpost);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
 
         db = FirebaseDatabase.getInstance().getReference();
         post = (Post) getIntent().getSerializableExtra("post");
@@ -113,7 +114,7 @@ public class ViewPostActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 
@@ -370,12 +371,7 @@ public class ViewPostActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                if (user.getType() == 0) {
-                    startActivity(new Intent(ViewPostActivity.this, PlansCActivity.class));
-                    finish();
-                } else {
-                    startActivity(new Intent(ViewPostActivity.this, PlansVActivity.class));
-                }
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -390,6 +386,12 @@ public class ViewPostActivity extends AppCompatActivity {
         notification.put("title", title);
 
         ref.child("notificationRequests").push().setValue(notification);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        super.onNavigateUp();
     }
 
 }

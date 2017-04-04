@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -45,6 +46,8 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
@@ -81,7 +84,7 @@ public class SignInActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO add a loading icon for user when logging in
+                // TODO Set loading icon visibility to true
                 String email = emailField.getText().toString().trim();
                 final String password = passwordField.getText().toString().trim();
 
@@ -95,10 +98,12 @@ public class SignInActivity extends AppCompatActivity {
                     return;
                 }
 
+                auth = FirebaseAuth.getInstance();
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                // TODO Set loading icon visibility to false
                                 if (!task.isSuccessful()) {
                                     passwordField.setError("Password incorrect or account does not exist.");
                                 } else {
@@ -165,6 +170,13 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        super.onNavigateUp();
+    }
+
 
 
 }

@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +35,7 @@ public class VolunteerDashActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference db;
     User user;
-    private Button CommunityButton, profileButton, offerButton, plansButton;
+    private Button profileButton, offerButton, plansButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class VolunteerDashActivity extends AppCompatActivity {
                 level.setText(Integer.toString(user.getLevel()));
                 progress.setProgress(user.getLevelProgress() * 10);
                 progressText.setText(Integer.toString(user.getLevelProgress()) + "/10");
+                // Get number of accepted plans
+                plansButton.setText(plansButton.getText() + " (" + user.getAcceptedPosts().size() + ")");
             }
 
             @Override
@@ -67,17 +71,9 @@ public class VolunteerDashActivity extends AppCompatActivity {
             }
         });
 
-        CommunityButton = (Button) findViewById(R.id.your_community_button_vol);
         profileButton = (Button) findViewById(R.id.your_profile_button_vol);
         offerButton = (Button) findViewById(R.id.offer_help_button_vol);
         plansButton = (Button) findViewById(R.id.your_plans_button_vol);
-
-        CommunityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(VolunteerDashActivity.this, CommunityActivity.class));
-            }
-        });
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override

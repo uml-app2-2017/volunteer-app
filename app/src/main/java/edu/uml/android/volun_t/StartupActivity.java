@@ -23,6 +23,8 @@ public class StartupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
+        overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right);
+        getSupportActionBar().hide();
 
         Button LoginButton = (Button) findViewById(R.id.LoginButton);
         LoginButton.setOnClickListener(new View.OnClickListener() {
@@ -40,5 +42,12 @@ public class StartupActivity extends AppCompatActivity {
 
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        super.onNavigateUp();
+    }
+
 
 }

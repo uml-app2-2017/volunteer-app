@@ -31,4 +31,10 @@ public class PlansCActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setText("Completed");
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        super.onNavigateUp();
+    }
+
 }

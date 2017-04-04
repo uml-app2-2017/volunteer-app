@@ -1,5 +1,6 @@
 package edu.uml.android.volun_t;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,12 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,11 +40,11 @@ public class ProfileActivity extends AppCompatActivity {
     TextView cNameText, cAddressText, cPhoneText, cEmailText;
     EditText cNameEdit, cAddressEdit, cPhoneEdit;
     // Volunteer views
-    TextView vNameText, vAddressText, vPhoneText, vMakeText, vPlateText, vSeatsText, vHandicapText, vEmailText;
-    EditText vNameEdit, vAddressEdit, vPhoneEdit, vMakeEdit, vPlateEdit, vSeatsEdit;
+    TextView vNameText, vAddressText, vPhoneText, vMakeText, vModelText, vPlateText, vSeatsText, vHandicapText, vEmailText;
+    EditText vNameEdit, vAddressEdit, vPhoneEdit, vMakeEdit, vModelEdit, vPlateEdit, vSeatsEdit;
     CheckBox vHandicapEdit;
 
-    FloatingActionButton edit_button;
+    FloatingActionButton edit_button, cancel_button;
     private Boolean edit_mode = FALSE;
 
     @Override
@@ -65,12 +68,14 @@ public class ProfileActivity extends AppCompatActivity {
                     setContentView(R.layout.activity_cprofile);
                     setupClientViews();
                     edit_button = (FloatingActionButton) findViewById(R.id.edit_profile_button);
+                    cancel_button = (FloatingActionButton) findViewById(R.id.cancel_edit_profile_button);
 
                     edit_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             if(edit_mode == FALSE) {
-                                edit_button.setImageResource(R.mipmap.ic_done);
+                                edit_button.setImageResource(R.mipmap.ic_done_white);
+                                cancel_button.setVisibility(View.VISIBLE); //
 
                                 cNameText.setVisibility(View.GONE);
                                 cAddressText.setVisibility(View.GONE);
@@ -82,7 +87,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 edit_mode = TRUE;
                             } else if (edit_mode == TRUE){
-                                edit_button.setImageResource(R.mipmap.ic_pencil);
+                                edit_button.setImageResource(R.mipmap.ic_pencil_white);
+                                cancel_button.setVisibility(View.GONE); //
 
                                 cNameText.setVisibility(View.VISIBLE);
                                 cAddressText.setVisibility(View.VISIBLE);
@@ -108,21 +114,46 @@ public class ProfileActivity extends AppCompatActivity {
                             }
                         }
                     });
+
+                    cancel_button.setOnClickListener(new View.OnClickListener() { //
+                        @Override
+                        public void onClick(View view) {
+                            edit_button.setImageResource(R.mipmap.ic_pencil_white);
+                            cancel_button.setVisibility(View.GONE);
+
+                            cNameText.setVisibility(View.VISIBLE);
+                            cAddressText.setVisibility(View.VISIBLE);
+                            cPhoneText.setVisibility(View.VISIBLE);
+
+                            cNameEdit.setVisibility(View.GONE);
+                            cAddressEdit.setVisibility(View.GONE);
+                            cPhoneEdit.setVisibility(View.GONE);
+
+                            cNameEdit.setText(cNameText.getText());
+                            cAddressEdit.setText(cAddressText.getText());
+                            cPhoneEdit.setText(cPhoneText.getText());
+
+                            edit_mode = FALSE;
+                        }
+                    });
                 } else if (userType == 1) {
                     setContentView(R.layout.activity_vprofile);
                     setupVolunteerViews();
                     edit_button = (FloatingActionButton) findViewById(R.id.edit_profile_button);
+                    cancel_button = (FloatingActionButton) findViewById(R.id.cancel_edit_profile_button); //
 
                     edit_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             if(edit_mode == FALSE) {
-                                edit_button.setImageResource(R.mipmap.ic_done);
+                                edit_button.setImageResource(R.mipmap.ic_done_white);
+                                cancel_button.setVisibility(View.VISIBLE); //
 
                                 vNameText.setVisibility(View.GONE);
                                 vAddressText.setVisibility(View.GONE);
                                 vPhoneText.setVisibility(View.GONE);
                                 vMakeText.setVisibility(View.GONE);
+                                vModelText.setVisibility(View.GONE);
                                 vPlateText.setVisibility(View.GONE);
                                 vSeatsText.setVisibility(View.GONE);
                                 vHandicapText.setVisibility(View.GONE);
@@ -131,18 +162,21 @@ public class ProfileActivity extends AppCompatActivity {
                                 vAddressEdit.setVisibility(View.VISIBLE);
                                 vPhoneEdit.setVisibility(View.VISIBLE);
                                 vMakeEdit.setVisibility(View.VISIBLE);
+                                vModelEdit.setVisibility(View.VISIBLE);
                                 vPlateEdit.setVisibility(View.VISIBLE);
                                 vSeatsEdit.setVisibility(View.VISIBLE);
                                 vHandicapEdit.setVisibility(View.VISIBLE);
 
                                 edit_mode = TRUE;
                             } else if (edit_mode == TRUE){
-                                edit_button.setImageResource(R.mipmap.ic_pencil);
+                                edit_button.setImageResource(R.mipmap.ic_pencil_white);
+                                cancel_button.setVisibility(View.GONE); //
 
                                 vNameText.setVisibility(View.VISIBLE);
                                 vAddressText.setVisibility(View.VISIBLE);
                                 vPhoneText.setVisibility(View.VISIBLE);
                                 vMakeText.setVisibility(View.VISIBLE);
+                                vModelText.setVisibility(View.VISIBLE);
                                 vPlateText.setVisibility(View.VISIBLE);
                                 vSeatsText.setVisibility(View.VISIBLE);
                                 vHandicapText.setVisibility(View.VISIBLE);
@@ -151,6 +185,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 vAddressEdit.setVisibility(View.GONE);
                                 vPhoneEdit.setVisibility(View.GONE);
                                 vMakeEdit.setVisibility(View.GONE);
+                                vModelEdit.setVisibility(View.GONE);
                                 vPlateEdit.setVisibility(View.GONE);
                                 vSeatsEdit.setVisibility(View.GONE);
                                 vHandicapEdit.setVisibility(View.GONE);
@@ -161,6 +196,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 vAddressText.setText(vAddressEdit.getText());
                                 vPhoneText.setText(vPhoneEdit.getText());
                                 vMakeText.setText(vMakeEdit.getText());
+                                vModelText.setText(vModelEdit.getText());
                                 vPlateText.setText(vPlateEdit.getText());
                                 vSeatsText.setText(vSeatsEdit.getText());
                                 if(vHandicapEdit.isChecked()){
@@ -174,11 +210,55 @@ public class ProfileActivity extends AppCompatActivity {
                                 user.setPhone(vPhoneText.getText().toString());
                                 user.setAddress(vAddressText.getText().toString());
                                 user.setMake(vMakeText.getText().toString());
+                                user.setModel(vModelText.getText().toString());
                                 user.setPlate(vPlateText.getText().toString());
                                 user.setSeats(Integer.parseInt(vSeatsText.getText().toString()));
                                 user.setHandicap(vHandicapEdit.isChecked());
                                 updateUserToDatabase();
                             }
+                        }
+                    });
+
+                    cancel_button.setOnClickListener(new View.OnClickListener() { //
+                        @Override
+                        public void onClick(View view) {
+                            InputMethodManager inputManager = (InputMethodManager)
+                                    getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ?
+                                    null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                            edit_button.setImageResource(R.mipmap.ic_pencil_white);
+                            cancel_button.setVisibility(View.GONE);
+
+                            vNameText.setVisibility(View.VISIBLE);
+                            vAddressText.setVisibility(View.VISIBLE);
+                            vPhoneText.setVisibility(View.VISIBLE);
+                            vMakeText.setVisibility(View.VISIBLE);
+                            vModelText.setVisibility(View.VISIBLE);
+                            vPlateText.setVisibility(View.VISIBLE);
+                            vSeatsText.setVisibility(View.VISIBLE);
+                            vHandicapText.setVisibility(View.VISIBLE);
+
+                            vNameEdit.setVisibility(View.GONE);
+                            vAddressEdit.setVisibility(View.GONE);
+                            vPhoneEdit.setVisibility(View.GONE);
+                            vMakeEdit.setVisibility(View.GONE);
+                            vModelEdit.setVisibility(View.GONE);
+                            vPlateEdit.setVisibility(View.GONE);
+                            vSeatsEdit.setVisibility(View.GONE);
+                            vHandicapEdit.setVisibility(View.GONE);
+
+                            vNameEdit.setText(vNameText.getText());
+                            vAddressEdit.setText(vAddressText.getText());
+                            vPhoneEdit.setText(vPhoneText.getText());
+                            vMakeEdit.setText(vMakeText.getText());
+                            vModelEdit.setText(vModelText.getText());
+                            vPlateEdit.setText(vPlateText.getText());
+                            vSeatsEdit.setText(vSeatsText.getText());
+                            if(vHandicapText.getText() == "Yes"){
+                                vHandicapEdit.setChecked(TRUE);
+                            } else {vHandicapEdit.setChecked(FALSE);}
+
+                            edit_mode = FALSE;
                         }
                     });
                 }
@@ -217,6 +297,7 @@ public class ProfileActivity extends AppCompatActivity {
         vPhoneText = (TextView) findViewById(R.id.profile_phone_field);
         vEmailText = (TextView) findViewById(R.id.profile_email_field);
         vMakeText = (TextView) findViewById(R.id.profile_car_make_field);
+        vModelText = (TextView) findViewById(R.id.profile_car_model_field);
         vPlateText = (TextView) findViewById(R.id.profile_license_plate_field);
         vSeatsText = (TextView) findViewById(R.id.profile_available_seats_field);
         vHandicapText = (TextView) findViewById(R.id.profile_handicapable_field);
@@ -224,6 +305,7 @@ public class ProfileActivity extends AppCompatActivity {
         vAddressEdit = (EditText) findViewById(R.id.profile_address_field_edit);
         vPhoneEdit = (EditText) findViewById(R.id.profile_phone_field_edit);
         vMakeEdit = (EditText) findViewById(R.id.profile_car_make_field_edit);
+        vModelEdit = (EditText) findViewById(R.id.profile_car_model_edit);
         vPlateEdit = (EditText) findViewById(R.id.profile_license_plate_field_edit);
         vSeatsEdit = (EditText) findViewById(R.id.profile_available_seats_field_edit);
         vHandicapEdit = (CheckBox) findViewById(R.id.profile_handicapable_field_edit);
@@ -235,8 +317,10 @@ public class ProfileActivity extends AppCompatActivity {
         vPhoneText.setText(user.getPhone());
         vPhoneEdit.setText(user.getPhone());
         vEmailText.setText(user.getEmail());
-        vMakeText.setText(user.getMake() + " " + user.getModel());
-        vMakeEdit.setText(user.getMake() + " " + user.getModel());
+        vMakeText.setText(user.getMake());
+        vMakeEdit.setText(user.getMake());
+        vModelText.setText(user.getModel());
+        vModelEdit.setText(user.getModel());
         vPlateText.setText(user.getPlate());
         vPlateEdit.setText(user.getPlate());
         vSeatsText.setText("" + user.getSeats());
@@ -259,15 +343,16 @@ public class ProfileActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                if (userType == 0) {
-                    startActivity(new Intent(ProfileActivity.this, ClientDashActivity.class));
-                    finish();
-                } else {
-                    startActivity(new Intent(ProfileActivity.this, VolunteerDashActivity.class));
-                }
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onNavigateUp();
+        super.onBackPressed();
     }
 
 }

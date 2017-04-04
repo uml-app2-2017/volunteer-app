@@ -59,6 +59,9 @@
 
                 <EditText
                     android:id="@+id/profile_name_field_edit"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:text="Merideth Smith"
                     android:textSize="18dp"
                     android:visibility="gone"
@@ -101,6 +104,9 @@
 
                 <EditText
                     android:id="@+id/profile_address_field_edit"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:text="Merideth Smith"
                     android:textSize="18dp"
                     android:visibility="gone"
@@ -128,6 +134,8 @@
 
                 <EditText
                     android:id="@+id/profile_phone_field_edit"
+                    android:imeOptions="actionNext"
+                    android:maxLines="1"
                     android:text="Merideth Smith"
                     android:textSize="18dp"
                     android:inputType="number"
@@ -164,13 +172,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Make and Model"
+                    android:text="Make"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_horizontal_margin"/>
 
                 <TextView
                     android:id="@+id/profile_car_make_field"
-                    android:text="Toyota Corolla"
+                    android:text="Toyota"
                     android:textSize="18dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -179,7 +187,38 @@
 
                 <EditText
                     android:id="@+id/profile_car_make_field_edit"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:text="Merideth Smith"
+                    android:textSize="18dp"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Model"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_horizontal_margin"/>
+
+                <TextView
+                    android:id="@+id/profile_car_model_field"
+                    android:text="Corolla"
+                    android:textSize="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+                <EditText
+                    android:id="@+id/profile_car_model_edit"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:textSize="18dp"
                     android:visibility="gone"
                     android:layout_width="match_parent"
@@ -205,6 +244,9 @@
 
                 <EditText
                     android:id="@+id/profile_license_plate_field_edit"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
                     android:text="Merideth Smith"
                     android:textSize="18dp"
                     android:visibility="gone"
@@ -231,6 +273,8 @@
 
                 <EditText
                     android:id="@+id/profile_available_seats_field_edit"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1"
                     android:text="Merideth Smith"
                     android:textSize="18dp"
                     android:inputType="number"
@@ -280,8 +324,21 @@
         app:backgroundTint="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@mipmap/ic_pencil"
+        android:src="@mipmap/ic_pencil_white"
         android.support.design:fabSize="normal"
         android.support.design:useCompatPadding="true"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancel_edit_profile_button"
+        app:backgroundTint="#FF0000"
+        android:src="@mipmap/ic_cancel"
+        android.support.design:fabSize="normal"
+        android.support.design:useCompatPadding="true"
+        android:visibility="gone"
+        android:layout_marginBottom="63dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

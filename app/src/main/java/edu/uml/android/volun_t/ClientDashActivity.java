@@ -72,6 +72,8 @@ public class ClientDashActivity extends AppCompatActivity {
                 // Update greetings
                 TextView greeting = (TextView) findViewById(R.id.user_greeting_client);
                 greeting.setText("Hello, " + user.getFirst() + "!");
+                // Get number of accepted plans
+                plansButton.setText(plansButton.getText() + " (" + user.getAcceptedPosts().size() + ")");
             }
 
             @Override

@@ -23,11 +23,16 @@ public class PlansVActivity extends AppCompatActivity {
         CategoryVAdapter adapter = new CategoryVAdapter(this, getSupportFragmentManager());
 
         viewPager.setAdapter(adapter);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setText("Accepted");
         tabLayout.getTabAt(1).setText("Completed");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        super.onNavigateUp();
     }
 
 }

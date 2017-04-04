@@ -39,6 +39,9 @@
 
         <EditText
             android:id="@+id/email_field"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -54,6 +57,8 @@
         <EditText
             android:id="@+id/password_field"
             android:inputType="textPassword"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -68,6 +73,8 @@
 
         <EditText
             android:id="@+id/password_field_2"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,6 +161,9 @@
 
         <EditText
             android:id="@+id/first_name_volunteer_field"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -168,6 +178,9 @@
 
         <EditText
             android:id="@+id/last_name_volunteer_field"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -182,6 +195,9 @@
 
         <EditText
             android:id="@+id/address_volunteer_field"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -196,6 +212,8 @@
 
         <EditText
             android:id="@+id/phone_volunteer_field"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -236,6 +254,9 @@
 
         <EditText
             android:id="@+id/first_name_client_field"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -250,6 +271,9 @@
 
         <EditText
             android:id="@+id/last_name_client_field"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -264,6 +288,9 @@
 
         <EditText
             android:id="@+id/address_client_field"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -278,6 +305,8 @@
 
         <EditText
             android:id="@+id/phone_client_field"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -318,6 +347,9 @@
 
         <EditText
             android:id="@+id/make_field"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -332,6 +364,9 @@
 
         <EditText
             android:id="@+id/model_field"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -346,6 +381,9 @@
 
         <EditText
             android:id="@+id/license_plate_field"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -360,6 +398,8 @@
 
         <EditText
             android:id="@+id/seats_field"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
