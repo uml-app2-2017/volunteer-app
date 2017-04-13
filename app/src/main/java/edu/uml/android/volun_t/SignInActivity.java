@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,7 +85,11 @@ public class SignInActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO Set loading icon visibility to true
+                View pb = (View) findViewById(R.id.loading_indicator);
+                View loginButton = (View) findViewById(R.id.login_button);
+                View loginPrompt = (View) findViewById(R.id.bubble);
+                View passwordText = (View) findViewById(R.id.forgot_password);
+
                 String email = emailField.getText().toString().trim();
                 final String password = passwordField.getText().toString().trim();
 
@@ -97,6 +102,11 @@ public class SignInActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                pb.setVisibility(View.VISIBLE);
+                loginButton.setVisibility(View.GONE);
+                loginPrompt.setVisibility(View.GONE);
+                passwordText.setVisibility(View.GONE);
 
                 auth = FirebaseAuth.getInstance();
                 auth.signInWithEmailAndPassword(email, password)
