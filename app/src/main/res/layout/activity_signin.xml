@@ -16,7 +16,8 @@
             android:id="@+id/bubble"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:background="@drawable/drawable_rectangle"
-            android:layout_centerInParent="true">
+            android:layout_centerInParent="true"
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="match_parent"
@@ -74,7 +75,8 @@
             android:text="Forgot your password?"
             android:layout_alignTop="@id/bubble"
             android:gravity="center"
-            android:textColor="@color/colorWhiteFont" />
+            android:textColor="@color/colorWhiteFont"
+            android:visibility="visible"/>
 
     </LinearLayout>
 
@@ -87,6 +89,15 @@
         android:textSize="30dp"
         android:textColor="@color/colorWhiteFont"
         android:background="@color/colorPrimary"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"/>
+
+    <ProgressBar
+        android:id="@+id/loading_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
  </RelativeLayout>
