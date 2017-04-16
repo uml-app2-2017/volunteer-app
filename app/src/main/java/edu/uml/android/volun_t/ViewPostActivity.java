@@ -106,6 +106,7 @@ public class ViewPostActivity extends AppCompatActivity {
     }
 
     public void setupButtons() {
+        Button here = (Button) findViewById(R.id.here_button);
         Button accept = (Button) findViewById(R.id.accept_button);
         Button complete = (Button) findViewById(R.id.complete_button);
         Button cancel = (Button) findViewById(R.id.cancel_button);
@@ -255,6 +256,14 @@ public class ViewPostActivity extends AppCompatActivity {
             }
         } else if (user.getType() == 1) {
             if (category.equals("accepted")) {
+                here.setVisibility(View.VISIBLE);
+                here.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sendNotificationToUser(post.getRequesterUid(), user.getFirst() + " is waiting for you.",
+                                "Your ride is here!");
+                    }
+                });
                 cancel.setVisibility(View.VISIBLE);
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override

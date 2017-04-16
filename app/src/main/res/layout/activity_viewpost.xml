@@ -12,6 +12,17 @@
         android:layout_alignParentBottom="true">
 
         <Button
+            android:id="@+id/here_button"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:layout_marginBottom="0dp"
+            android:textColor="@color/colorWhiteFont"
+            android:textSize="@dimen/signup_heading_font"
+            android:text="I'm Here!"/>
+
+        <Button
             android:id="@+id/complete_button"
             android:visibility="gone"
             android:layout_width="match_parent"
