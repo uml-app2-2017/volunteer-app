@@ -43,7 +43,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         FirebaseMessaging.getInstance().subscribeToTopic(uid);
 
-        db.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        db.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);

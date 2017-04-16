@@ -59,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance().getReference();
 
         // Get the type of user and set view accordingly
-        db.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        db.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);

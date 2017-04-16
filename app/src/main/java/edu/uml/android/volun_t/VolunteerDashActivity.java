@@ -111,9 +111,30 @@ public class VolunteerDashActivity extends AppCompatActivity {
             case R.id.sign_out:
                 signUserOut();
                 return true;
+            case R.id.reset_password:
+                resetPass();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void resetPass() {
+        db.child("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                String email = user.getEmail();
+                auth.sendPasswordResetEmail(email);
+                Toast.makeText(getApplicationContext(), "Password reset email sent!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("ERROR", "Failed to read value.", error.toException());
+            }
+        });
     }
 
     public boolean signUserOut() {

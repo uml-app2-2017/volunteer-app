@@ -50,10 +50,12 @@ public class Post implements Serializable {
     }
 
     public String getFormattedTime(Calendar c) {
+        String amPm = " AM";
         try {
+            if (c.get(Calendar.HOUR_OF_DAY) >= 12) amPm = " PM";
             String posted = "" + (c.get(Calendar.MONTH)+1) + "/" + c.get(Calendar.DAY_OF_MONTH) + "/" +
                     + c.get(Calendar.YEAR) + "  @  " + c.get(Calendar.HOUR) + ":"
-                    + String.format("%02d", c.get(Calendar.MINUTE));
+                    + String.format("%02d", c.get(Calendar.MINUTE)) + amPm;
             return posted;
         } catch (NullPointerException e) {
             return "";

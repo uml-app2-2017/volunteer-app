@@ -64,7 +64,7 @@ public class SignInActivity extends AppCompatActivity {
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.child("users").child(auth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                db.child("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         User user = dataSnapshot.getValue(User.class);
@@ -159,7 +159,7 @@ public class SignInActivity extends AppCompatActivity {
         FirebaseUser firebaseUser = auth.getCurrentUser();
         String uid = firebaseUser.getUid();
 
-        db.child("users").child(uid).addValueEventListener(new ValueEventListener() {
+        db.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
