@@ -1,14 +1,18 @@
 package edu.uml.android.volun_t;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +43,8 @@ public class ViewPostActivity extends AppCompatActivity {
     Post post;
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     String category;
+    Animator anim;      // Used to animate the checkmark
+    boolean animEnded = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -315,10 +321,11 @@ public class ViewPostActivity extends AppCompatActivity {
 
                                             }
                                         });
-                                        Toast.makeText(ViewPostActivity.this, "Post cancelled!", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(ViewPostActivity.this, "Post cancelled!", Toast.LENGTH_SHORT).show();
                                         sendNotificationToUser(post.getRequesterUid(), "Your plan has been reopenned to the public.",
                                                 user.getFirst() + " has cancelled your plans.");
-                                        finish();
+                                        startAnimation("Post cancelled!");
+                                        //finish();
                                         break;
 
                                     case DialogInterface.BUTTON_NEGATIVE:
@@ -367,8 +374,9 @@ public class ViewPostActivity extends AppCompatActivity {
                         post.setTakerName(user.getFirst() + " " + user.getLast());
                         db.child("pendingPosts").child(post.getPostId()).removeValue();
                         db.child("acceptedPosts").child(post.getPostId()).setValue(post);
-                        Toast.makeText(ViewPostActivity.this, "You accepted this post!", Toast.LENGTH_SHORT).show();
-                        finish();
+                        //Toast.makeText(ViewPostActivity.this, "You accepted this post!", Toast.LENGTH_SHORT).show();
+                        startAnimation("You accepted this post!");
+                        //finish();
                     }
                 });
             }
@@ -401,6 +409,84 @@ public class ViewPostActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         super.onNavigateUp();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+
+        // Wait for animation to finish
+        //It seems anim.isRunning() is always returning TRUE
+//        while(!animEnded){
+        while(anim.isRunning()){
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        //finish();
+    }
+
+    public void startAnimation(final String message){
+        // previously invisible view
+        final View checkView = findViewById(R.id.checkImage);
+        final View overlayView = findViewById(R.id.overlay);
+        final TextView textMessageView = (TextView) findViewById(R.id.textMessage);
+        checkView.post(new Runnable() {
+            @Override
+            public void run() {
+                // get the center for the clipping circle
+                int cx = checkView.getMeasuredWidth() / 2;
+                int cy = checkView.getMeasuredHeight() / 2;
+
+                // get the final radius for the clipping circle
+                //float finalRadius = (float) Math.hypot(cx, cy);
+
+                float finalRadius = Math.max(checkView.getWidth(), checkView.getHeight()) / 2;
+
+                // create the animator for this view (the start radius is zero)
+                anim = ViewAnimationUtils.createCircularReveal(checkView, cx, cy, 0, finalRadius);
+
+                //Animator anim = createRevealWithDelay(myView, cx, cy, 0, finalRadius);
+
+                anim.setDuration(2000);
+
+                textMessageView.setText(message);
+
+                // make the view visible and start the animation
+                overlayView.setVisibility(View.VISIBLE);
+                checkView.setVisibility(View.VISIBLE);
+                textMessageView.setVisibility(View.VISIBLE);
+
+                // make the view invisible when the animation is done
+                anim.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        //It's not clear that this is always being called when I expect it to
+                        super.onAnimationEnd(animation);
+
+                        checkView.clearAnimation();
+                        overlayView.setVisibility(View.INVISIBLE);
+                        checkView.setVisibility(View.INVISIBLE);
+                        textMessageView.setVisibility(View.INVISIBLE);
+                        animEnded = true;
+                    }
+                });
+
+                animEnded = false;
+                anim.start();
+
+                //Don't have this working yet
+               /* Handler handler = new Handler();
+                handler.postDelayed(new Runnable(){
+                    public void run() {
+                        anim.end();
+                    }
+                }, 2000); //delay is here*/
+            }
+        });
     }
 
 }

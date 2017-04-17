@@ -1,237 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground">
 
-    <LinearLayout
-        android:id="@+id/buttons"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/here_button"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:layout_marginBottom="0dp"
-            android:textColor="@color/colorWhiteFont"
-            android:textSize="@dimen/signup_heading_font"
-            android:text="I'm Here!"/>
-
-        <Button
-            android:id="@+id/complete_button"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:layout_marginBottom="0dp"
-            android:textColor="@color/colorWhiteFont"
-            android:textSize="@dimen/signup_heading_font"
-            android:text="Complete"/>
-
-        <Button
-            android:id="@+id/accept_button"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorWhiteFont"
-            android:textSize="@dimen/signup_heading_font"
-            android:layout_marginTop="0dp"
-            android:text="Accept"/>
-
-        <Button
-            android:id="@+id/cancel_button"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorRedFont"
-            android:textColor="@color/colorWhiteFont"
-            android:textSize="@dimen/signup_heading_font"
-            android:layout_marginTop="0dp"
-            android:text="Cancel Plan"/>
-
-        <Button
-            android:id="@+id/back_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorWhiteFont"
-            android:textSize="@dimen/signup_heading_font"
-            android:layout_marginTop="0dp"
-            android:text="Back"/>
-
-    </LinearLayout>
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:layout_above="@id/buttons">
+        android:background="@color/colorBackground">
 
         <LinearLayout
-            android:id="@+id/container"
+            android:id="@+id/buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/drawable_rectangle"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
 
-            <TextView
-                android:id="@+id/title"
+            <Button
+                android:id="@+id/here_button"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Title"
-                android:padding="@dimen/activity_horizontal_margin"
+                android:background="@color/colorPrimary"
+                android:layout_marginBottom="0dp"
+                android:textColor="@color/colorWhiteFont"
                 android:textSize="@dimen/signup_heading_font"
-                android:textStyle="bold"/>
+                android:text="I'm Here!"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
-
-            <LinearLayout
+            <Button
+                android:id="@+id/complete_button"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@color/colorPrimary"
+                android:layout_marginBottom="0dp"
+                android:textColor="@color/colorWhiteFont"
+                android:textSize="@dimen/signup_heading_font"
+                android:text="Complete"/>
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@mipmap/ic_description"/>
-
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Description"
-                    android:padding="@dimen/activity_horizontal_margin" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <Button
+                android:id="@+id/accept_button"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorWhiteFont"
+                android:textSize="@dimen/signup_heading_font"
+                android:layout_marginTop="0dp"
+                android:text="Accept"/>
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@mipmap/ic_time"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/time_posted"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Posted"
-                        android:padding="16dp"/>
-
-                    <TextView
-                        android:id="@+id/time_requested"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Requested"
-                        android:padding="16dp"/>
-
-                    <TextView
-                        android:id="@+id/time_completed"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Completed"
-                        android:padding="16dp"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <Button
+                android:id="@+id/cancel_button"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@color/colorRedFont"
+                android:textColor="@color/colorWhiteFont"
+                android:textSize="@dimen/signup_heading_font"
+                android:layout_marginTop="0dp"
+                android:text="Cancel Plan"/>
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="16dp"
-                    android:src="@mipmap/ic_location"/>
-
-                <TextView
-                    android:id="@+id/location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Location"
-                    android:padding="@dimen/activity_horizontal_margin"/>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <Button
+                android:id="@+id/back_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@mipmap/ic_user"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/requester"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Requested by"
-                        android:padding="16dp"/>
-
-                    <TextView
-                        android:id="@+id/taker"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Taken by"
-                        android:padding="16dp"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Status"
-                    android:padding="16dp"/>
-
-                <TextView
-                    android:id="@+id/status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Put status here"
-                    android:padding="16dp"/>
-
-            </LinearLayout>
+                android:background="@color/colorWhiteFont"
+                android:textSize="@dimen/signup_heading_font"
+                android:layout_marginTop="0dp"
+                android:text="Back"/>
 
         </LinearLayout>
 
-    </ScrollView>
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorBackground"
+            android:layout_above="@id/buttons">
 
-</RelativeLayout>
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_rectangle"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:textSize="@dimen/signup_heading_font"
+                    android:textStyle="bold"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:src="@mipmap/ic_description"/>
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:padding="@dimen/activity_horizontal_margin" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:src="@mipmap/ic_time"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/time_posted"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Posted"
+                            android:padding="16dp"/>
+
+                        <TextView
+                            android:id="@+id/time_requested"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Requested"
+                            android:padding="16dp"/>
+
+                        <TextView
+                            android:id="@+id/time_completed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Completed"
+                            android:padding="16dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_margin="16dp"
+                        android:src="@mipmap/ic_location"/>
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Location"
+                        android:padding="@dimen/activity_horizontal_margin"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:src="@mipmap/ic_user"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/requester"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Requested by"
+                            android:padding="16dp"/>
+
+                        <TextView
+                            android:id="@+id/taker"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Taken by"
+                            android:padding="16dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Status"
+                        android:padding="16dp"/>
+
+                    <TextView
+                        android:id="@+id/status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Put status here"
+                        android:padding="16dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#000000"
+        android:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/checkImage"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:paddingBottom="50dp"
+            android:src="@mipmap/ic_done_white"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/textMessage"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_alignBottom="@id/checkImage"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="Success!"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+</FrameLayout>
