@@ -1,13 +1,18 @@
 package edu.uml.android.volun_t;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +40,7 @@ public class ViewPostActivity extends AppCompatActivity {
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     String category;
     static boolean sent;
+    int numButtons = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,8 +93,8 @@ public class ViewPostActivity extends AppCompatActivity {
         location.setText(post.getLocation());
         timePosted.setText("Submitted on: " + post.getTimePosted());
         timeRequested.setText("Scheduled for: " + post.getTimeScheduled());
-        if (post.getTimeCompleted() == null)
-            timeCompleted.setText("Completed on: Not yet completed.");
+        if (post.getTimeCompleted().length() == 0)
+            timeCompleted.setVisibility(View.GONE);
         else
             timeCompleted.setText("Completed on: " + post.getTimeCompleted());
         requester.setText("Requested by: " + post.getRequesterName());
@@ -125,6 +131,7 @@ public class ViewPostActivity extends AppCompatActivity {
         if (user.getType() == 0) {
             if (category.equals("pending")) {
                 cancel.setVisibility(View.VISIBLE);
+                numButtons++;
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -158,6 +165,7 @@ public class ViewPostActivity extends AppCompatActivity {
                 });
             } else if (category.equals("accepted")) {
                 cancel.setVisibility(View.VISIBLE);
+                numButtons++;
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -207,6 +215,7 @@ public class ViewPostActivity extends AppCompatActivity {
                     }
                 });
                 complete.setVisibility(View.VISIBLE);
+                numButtons++;
                 complete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -260,6 +269,7 @@ public class ViewPostActivity extends AppCompatActivity {
         } else if (user.getType() == 1) {
             if (category.equals("accepted")) {
                 here.setVisibility(View.VISIBLE);
+                numButtons++;
                 here.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -268,6 +278,7 @@ public class ViewPostActivity extends AppCompatActivity {
                     }
                 });
                 cancel.setVisibility(View.VISIBLE);
+                numButtons++;
                 cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -338,6 +349,7 @@ public class ViewPostActivity extends AppCompatActivity {
             }
             if (category.equals("pending")) {
                 accept.setVisibility(View.VISIBLE);
+                numButtons++;
                 accept.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -376,6 +388,16 @@ public class ViewPostActivity extends AppCompatActivity {
                 });
             }
         }
+
+        LinearLayout buffer = (LinearLayout) findViewById(R.id.buffer);
+        buffer.setMinimumHeight(numButtons * 40);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_view_post, menu);
+        return true;
     }
 
     @Override
@@ -384,6 +406,9 @@ public class ViewPostActivity extends AppCompatActivity {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 onBackPressed();
+                return true;
+            case R.id.add_event:
+                addToCalendar(post);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -399,6 +424,17 @@ public class ViewPostActivity extends AppCompatActivity {
 
         if (!sent) ref.child("notificationRequests").push().setValue(notification);
         sent = true;
+    }
+
+    public void addToCalendar(Post post) {
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.Events.TITLE, post.getTitle())
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, post.getLocation())
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, post.getTimeScheduled());
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
     @Override
