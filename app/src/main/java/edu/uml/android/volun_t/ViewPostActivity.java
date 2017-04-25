@@ -7,11 +7,15 @@ import android.provider.CalendarContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -148,8 +152,7 @@ public class ViewPostActivity extends AppCompatActivity {
                                         db.child("users").child(uid).setValue(user);
                                         // Remove from actual pending
                                         db.child("pendingPosts").child(post.getPostId()).removeValue();
-                                        Toast.makeText(ViewPostActivity.this, "Post deleted!", Toast.LENGTH_SHORT).show();
-                                        finish();
+                                        makeToastAndFinish("Post deleted!");
                                         break;
 
                                     case DialogInterface.BUTTON_NEGATIVE:
@@ -197,10 +200,9 @@ public class ViewPostActivity extends AppCompatActivity {
                                         });
                                         // Remove from actual pending
                                         db.child("acceptedPosts").child(post.getPostId()).removeValue();
-                                        Toast.makeText(ViewPostActivity.this, "Post deleted!", Toast.LENGTH_SHORT).show();
+                                        makeToastAndFinish("Post deleted!");
                                         sendNotificationToUser(post.getTakerUid(), "You can still help out though!",
                                                 user.getFirst() + " has cancelled their plans.");
-                                        finish();
                                         break;
 
                                     case DialogInterface.BUTTON_NEGATIVE:
@@ -259,10 +261,9 @@ public class ViewPostActivity extends AppCompatActivity {
                         post.setTimeCompleted(post.getFormattedTime(cal));
                         db.child("acceptedPosts").child(post.getPostId()).removeValue();
                         db.child("completedPosts").child(post.getPostId()).setValue(post);
-                        Toast.makeText(ViewPostActivity.this, "Post completed!", Toast.LENGTH_SHORT).show();
+                        makeToastAndFinish("Post completed!");
                         sendNotificationToUser(post.getTakerUid(), "Thank you for helping!",
                                 user.getFirst() + " has completed your post!");
-                        finish();
                     }
                 });
             }
@@ -329,10 +330,9 @@ public class ViewPostActivity extends AppCompatActivity {
 
                                             }
                                         });
-                                        Toast.makeText(ViewPostActivity.this, "Post cancelled!", Toast.LENGTH_SHORT).show();
                                         sendNotificationToUser(post.getRequesterUid(), "Your plan has been reopenned to the public.",
                                                 user.getFirst() + " has cancelled your plans.");
-                                        finish();
+                                        makeToastAndFinish("Post cancelled!");
                                         break;
 
                                     case DialogInterface.BUTTON_NEGATIVE:
@@ -382,8 +382,7 @@ public class ViewPostActivity extends AppCompatActivity {
                         post.setTakerName(user.getFirst() + " " + user.getLast());
                         db.child("pendingPosts").child(post.getPostId()).removeValue();
                         db.child("acceptedPosts").child(post.getPostId()).setValue(post);
-                        Toast.makeText(ViewPostActivity.this, "You accepted this post!", Toast.LENGTH_SHORT).show();
-                        finish();
+                        makeToastAndFinish("Post accepted!");
                     }
                 });
             }
@@ -435,6 +434,22 @@ public class ViewPostActivity extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         }
+    }
+
+    public void makeToastAndFinish(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast,
+                (ViewGroup) findViewById(R.id.overlay));
+
+        TextView text = (TextView) layout.findViewById(R.id.textMessage);
+        text.setText(message);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+        finish();
     }
 
     @Override
