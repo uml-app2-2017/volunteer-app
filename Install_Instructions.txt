@@ -1,0 +1,13 @@
+How to Install Volun-T on Android
+
+1. Enable Unknown Sources
+Go to Settings > Lock screen and security. Make sure that the Unknown sources slider is set to on. When you set it to on, make sure you hit OK on the popup that appears.
+
+2. Get the APK file onto your device
+Download the Volun_T-(version).apk file from the repository. Whatever way you can get that file to your android device, do that. This can be done via USB drive (if you have the adapter), email, Google Drive, dropbox, etc.
+
+3. Install the app
+Go to the file explorer on your android device. Navigate to the place you downloaded the .apk file. On Samsung devices, the file explorer app is called "My Files". The default download location is Internal Storage > Download. When you find the file, click on it. The system should run you through a simple install wizard.
+
+4. Open Volun-T
+You should now be able to find the installed Volun-T app on your device. Go ahead and open it up, and log in if you have an account, or create one if you need to.
